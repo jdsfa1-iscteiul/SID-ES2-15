@@ -60,7 +60,7 @@
             </MenuBar>
             <ListView fx:id="measurements_list" layoutY="32.0" onMouseClicked="#displaySelected" onSwipeRight="#displaySelected" onSwipeUp="#displaySelected" prefHeight="650.0" prefWidth="400.0" />
             <Separator layoutX="401.0" layoutY="32.0" orientation="VERTICAL" prefHeight="650.0" prefWidth="20.0" />
-            <TextArea fx:id="notifications_text_area" editable="false" layoutX="409.0" layoutY="32.0" prefHeight="595.0" prefWidth="538.0" wrapText="true" />
+            <TextArea fx:id="measurements_text_area" editable="false" layoutX="409.0" layoutY="32.0" prefHeight="595.0" prefWidth="538.0" wrapText="true" />
             <Button fx:id="edit_button" layoutX="603.0" layoutY="639.0" mnemonicParsing="false" onAction="#handleEditButton" text="Editar esta medição" />
          </children>
       </AnchorPane>
