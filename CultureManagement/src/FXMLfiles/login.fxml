@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0" prefWidth="907.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
+   <children>
+      <ImageView fitHeight="646.0" fitWidth="915.0" layoutX="-2.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="file:../CultureManagement/src/images/img_817x460$2016_08_11_00_57_19_291957.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="378.0" layoutY="131.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="file:../CultureManagement/src/images/User_login_man_profile_account.png" />
+         </image>
+      </ImageView>
+      <PasswordField fx:id="password_box" layoutX="352.0" layoutY="337.0" promptText="Password" />
+      <Button fx:id="login_button" layoutX="415.0" layoutY="389.0" mnemonicParsing="false" onAction="#handleLoginButton" text="Log in" />
+      <TextField fx:id="username_box" layoutX="352.0" layoutY="290.0" promptText="Username" />
+   </children>
+</Pane>

@@ -1,8 +1,5 @@
 package controllers;
 
-import java.awt.Button;
-import java.awt.TextArea;
-import java.awt.TextField;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.IntegerBinding;
@@ -10,8 +7,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import utilities.Measurement;
 
 public class MainController {
@@ -22,22 +21,24 @@ public class MainController {
 	private CheckBox temperatura_checkbox ;
 	
 	@FXML
-	private Button filtrar_button ;
 	private ObservableSet<CheckBox> selectedCheckBoxes = FXCollections.observableSet();
 	private ObservableSet<CheckBox> unselectedCheckBoxes = FXCollections.observableSet();
+	private IntegerBinding numCheckBoxesSelected = Bindings.size(selectedCheckBoxes);
 
 	@FXML
 	private ObservableList<Measurement> list = FXCollections.observableArrayList();
 
-	private IntegerBinding numCheckBoxesSelected = Bindings.size(selectedCheckBoxes);
-
 	@FXML
-	private Button add_button ;
+	private Button addCulture_button ;
 	@FXML 
 	private Button edit_button;
+	@FXML 
+	private Button adminMenu_button;
+	@FXML
+	private Button filtrar_button ;
+	
 	@FXML
 	public TextArea measurements_text_area;	
-
 	@FXML
 	private ListView<Measurement> measurements_list;
 
@@ -52,13 +53,13 @@ public class MainController {
 		
 	}
 
-	public void handleAddButton() {}
+	public void handleAddCultureButton() {}
 	
 	public void handleEditButton() {}
 	
-	public void handleFiltrarButton() {}
+	public void handleAdminMenuButton() {}
 	
-	public void handleLoginButton() {}
+	public void handleFiltrarButton() {}
 	
 	public void displaySelected() {}
 }

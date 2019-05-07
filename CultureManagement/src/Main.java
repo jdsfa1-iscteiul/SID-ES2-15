@@ -9,10 +9,10 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Parent root= FXMLLoader.load(getClass().getResource("FXMLfiles/gui.fxml"));
+			Parent root= FXMLLoader.load(getClass().getResource("FXMLfiles/login.fxml"));
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
-			primaryStage.setTitle("Manutenção de Culturas");
+			primaryStage.setTitle("Login");
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
