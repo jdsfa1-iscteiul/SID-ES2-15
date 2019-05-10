@@ -2,6 +2,9 @@ package controllers;
 
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -49,9 +52,16 @@ public class MainController {
 	public TextArea measurements_text_area;	
 	@FXML
 	private ListView<Measurement> measurements_list;
-
+	
+	
+	private Connection conn = null;
 	public void initialize() {
-		
+		try {
+			conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/grupo15_main?user=root&password=");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 		writeDataOnGui();
 		
 	}
@@ -87,7 +97,7 @@ public class MainController {
 		Parent p = Loader.getRoot();
 		Stage stage = new Stage();
 		stage.setScene(new Scene(p));
-		stage.setTitle("Adicionar medição");
+		stage.setTitle("Adicionar mediÃ§Ã£o");
 		stage.show();
 	}
 	

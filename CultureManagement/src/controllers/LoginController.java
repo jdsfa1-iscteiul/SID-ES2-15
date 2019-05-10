@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import database.mysql.ConnectionMariaDB;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,18 +23,23 @@ public class LoginController {
 	@FXML
 	private Button login_button;
 	
+	
 	/*
 	 * Deve verificar se os dados de login estao corretos
 	 */
 	public void handleLoginButton() {
 		
+		ConnectionMariaDB conn = new ConnectionMariaDB();
+		
 		//if sucesso
-		load_main_scene();
-		closeWindow();
+		if(conn.connectToDB(username_box.getText(), password_box.getText())) {
+			load_main_scene();
+			closeWindow();
+		}
 	}
 	
 	/*
-	 * Se o utilizador se conseguir autenticar o programa deve chamar esta função para carregar o proximo menu.
+	 * Se o utilizador se conseguir autenticar o programa deve chamar esta funÃ§Ã£o para carregar o proximo menu.
 	 */
 	public void load_main_scene() {
 		FXMLLoader Loader = new FXMLLoader();
