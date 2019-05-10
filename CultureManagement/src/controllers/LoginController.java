@@ -9,9 +9,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import utilities.Context;
 
 public class LoginController {
 	@FXML
@@ -33,9 +36,15 @@ public class LoginController {
 		
 		//if sucesso
 		if(conn.connectToDB(username_box.getText(), password_box.getText())) {
+			Context.getInstance().setConn(conn);
 			load_main_scene();
 			closeWindow();
-		}
+		} else {
+			Alert errorAlert = new Alert(AlertType.ERROR);
+			errorAlert.setHeaderText("Impossivel conectar à base de dados");
+			errorAlert.setContentText("O username ou a password estão incorrectos");
+			errorAlert.showAndWait();
+		}	
 	}
 	
 	/*
