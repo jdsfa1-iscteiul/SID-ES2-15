@@ -4,6 +4,8 @@ package controllers;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,6 +24,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
+import utilities.Context;
+import utilities.Culture;
 import utilities.Measurement;
 
 public class MainController {
@@ -37,7 +41,9 @@ public class MainController {
 //	private IntegerBinding numCheckBoxesSelected = Bindings.size(selectedCheckBoxes);
 
 	@FXML
-	private ObservableList<Measurement> list = FXCollections.observableArrayList();
+	private ObservableList<Measurement> listM = FXCollections.observableArrayList();
+	@FXML
+	private ListView<Measurement> measurements_list;
 
 	@FXML
 	private Button addCulture_button ;
@@ -47,20 +53,15 @@ public class MainController {
 	private Button adminMenu_button;
 	@FXML
 	private Button filtrar_button ;
+
 	
 	@FXML
 	public TextArea measurements_text_area;	
-	@FXML
-	private ListView<Measurement> measurements_list;
-	
 	
 	private Connection conn = null;
+	
 	public void initialize() {
-		try {
-			conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/grupo15_main?user=root&password=");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		conn = Context.getInstance().getConn();
 
 		writeDataOnGui();
 		
@@ -68,7 +69,8 @@ public class MainController {
 	
 	/*reads cultures from DB and writes on gui*/
 	private void writeDataOnGui() {
-		
+		getMeasurementsFromDB();
+		measurements_list.getItems().addAll(listM);
 	}
 
 	public void handleAddCultureButton() {
@@ -97,7 +99,7 @@ public class MainController {
 		Parent p = Loader.getRoot();
 		Stage stage = new Stage();
 		stage.setScene(new Scene(p));
-		stage.setTitle("Adicionar medição");
+		stage.setTitle(Context.getInstance().getUsername());
 		stage.show();
 	}
 	
@@ -114,5 +116,20 @@ public class MainController {
 		stage.setScene(new Scene(p));
 		stage.setTitle("Admin menu");
 		stage.show();
+	}
+	
+	public void getMeasurementsFromDB() {
+		try {
+			PreparedStatement statement = conn.prepareStatement("SELECT * FROM measurements"); /* Devia ser o SP que permite ver as mediçoes dele*/
+			ResultSet results = statement.executeQuery();
+			while(results.next()) {
+				Measurement measurement = new Measurement();
+				listM.add(measurement);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }

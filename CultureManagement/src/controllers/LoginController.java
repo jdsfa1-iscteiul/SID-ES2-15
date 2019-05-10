@@ -1,6 +1,9 @@
 package controllers;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,25 +29,30 @@ public class LoginController {
 	@FXML
 	private Button login_button;
 	
+	private Connection conn;
+	
+	private String host = "localhost:3306/";
+	private String dbName = "grupo15_main";
+	private String username="root";
+	private String password="";
+			
+	
 	
 	/*
 	 * Deve verificar se os dados de login estao corretos
 	 */
 	public void handleLoginButton() {
-		
-		ConnectionMariaDB conn = new ConnectionMariaDB();
-		
-		//if sucesso
-		if(conn.connectToDB(username_box.getText(), password_box.getText())) {
+		try {
+			this.conn=DriverManager.getConnection("jdbc:mariadb://"+ host + dbName +"?user="+username+"&password="+password);
 			Context.getInstance().setConn(conn);
 			load_main_scene();
 			closeWindow();
-		} else {
+		} catch(SQLException e) {
 			Alert errorAlert = new Alert(AlertType.ERROR);
 			errorAlert.setHeaderText("Impossivel conectar à base de dados");
 			errorAlert.setContentText("O username ou a password estão incorrectos");
 			errorAlert.showAndWait();
-		}	
+		}
 	}
 	
 	/*

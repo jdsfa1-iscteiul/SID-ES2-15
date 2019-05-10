@@ -29,35 +29,7 @@ public class AddMeasurementController {
 	
 	
 	private Connection conn;
-	
-	public void initialize() {
-		
-		try {
-			conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/grupo15_main?user=root&password=");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		//Carrega culturas para a lista
-		
-		try {
-			PreparedStatement statement = conn.prepareStatement("SELECT * FROM culture");
-			ResultSet results = statement.executeQuery();
-			
-			results.next();
-			Culture culture = new Culture(results.getString("culture_name"));
-			System.out.println(results.getString("culture_name"));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
-		
-		
-		//carrega variaveis para a lista
-		
-	}
+
 	
 	public void handleAdicionarButton() {
 		//adiciona à base de dados

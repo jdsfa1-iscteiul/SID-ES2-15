@@ -1,6 +1,6 @@
 package utilities;
 
-import database.mysql.ConnectionMariaDB;
+import java.sql.Connection;
 
 public class Context {
 	
@@ -14,15 +14,15 @@ public class Context {
         return single_instance; 
     }
 	
-	private ConnectionMariaDB conn;
+	private Connection conn;
 	
 	private String username;
 	
-	public void setConn(ConnectionMariaDB conn2) {
+	public void setConn(Connection conn2) {
 		this.conn=conn2;
 	} 
 	
-	public ConnectionMariaDB getConn() {
+	public Connection getConn() {
 		return conn;
 	}
 
