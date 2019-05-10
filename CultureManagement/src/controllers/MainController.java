@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.IntegerBinding;
+//import javafx.beans.binding.Bindings;
+//import javafx.beans.binding.IntegerBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
@@ -30,8 +30,8 @@ public class MainController {
 	
 	@FXML
 	private ObservableSet<CheckBox> selectedCheckBoxes = FXCollections.observableSet();
-	private ObservableSet<CheckBox> unselectedCheckBoxes = FXCollections.observableSet();
-	private IntegerBinding numCheckBoxesSelected = Bindings.size(selectedCheckBoxes);
+//	private ObservableSet<CheckBox> unselectedCheckBoxes = FXCollections.observableSet();
+//	private IntegerBinding numCheckBoxesSelected = Bindings.size(selectedCheckBoxes);
 
 	@FXML
 	private ObservableList<Measurement> list = FXCollections.observableArrayList();
