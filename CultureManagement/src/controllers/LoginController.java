@@ -43,7 +43,7 @@ public class LoginController {
 	 */
 	public void handleLoginButton() {
 		try {
-			this.conn=DriverManager.getConnection("jdbc:mariadb://"+ host + dbName +"?user="+username+"&password="+password);
+			this.conn=DriverManager.getConnection("jdbc:mariadb://"+host+dbName+"?user="+username+"&password="+password);
 			Context.getInstance().setConn(conn);
 			load_main_scene();
 			closeWindow();
@@ -60,7 +60,7 @@ public class LoginController {
 	 */
 	public void load_main_scene() {
 		FXMLLoader Loader = new FXMLLoader();
-		Loader.setLocation(getClass().getResource("../FXMLFiles/gui.fxml"));
+		Loader.setLocation(getClass().getResource("../FXMLFiles/main_gui.fxml"));
 		try {
 			Loader.load();
 		} catch (IOException e) {

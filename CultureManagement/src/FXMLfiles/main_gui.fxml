@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane dividerPositions="0.20495495495495494" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="1266.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="687.0" prefWidth="363.0">
+         <children>
+            <ImageView fitHeight="873.0" fitWidth="466.0" layoutX="-42.0" layoutY="-29.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:../CultureManagement/src/images/backgrounf.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="158.0" fitWidth="250.0" layoutX="6.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:../CultureManagement/src/images/ISCTEIULNormasLogos-02.png" />
+               </image>
+            </ImageView>
+            <CheckBox fx:id="temperatura_checkbox" layoutX="26.0" layoutY="190.0" mnemonicParsing="false" text="Temperatura" textFill="WHITE" />
+            <CheckBox fx:id="luz_checkbox" layoutX="26.0" layoutY="227.0" mnemonicParsing="false" text="Luz" textFill="WHITE" />
+            <Button fx:id="filtrar_button" layoutX="98.0" layoutY="304.0" mnemonicParsing="false" onAction="#handleFiltrarButton" text="Filtrar" />
+            <ImageView fitHeight="57.0" fitWidth="64.0" layoutX="70.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:../CultureManagement/src/images/bulb_icon-icons.com_74600.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="43.0" fitWidth="51.0" layoutX="145.0" layoutY="179.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:../CultureManagement/src/images/temperature-186-532268.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="25.0" layoutY="135.0" text="Filtrar por:" textFill="#f8f6f6">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Button fx:id="adminMenu_button" layoutX="82.0" layoutY="624.0" mnemonicParsing="false" onAction="#handleAdminMenuButton" text="Admin Menu" />
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="680.0" prefWidth="986.0">
+         <children>
+            <ListView fx:id="cultures_list" layoutX="14.0" layoutY="82.0" onMouseClicked="#displaySelected" onSwipeDown="#displaySelected" onSwipeUp="#displaySelected" prefHeight="542.0" prefWidth="191.0" />
+            <Separator layoutX="214.0" layoutY="86.0" orientation="VERTICAL" prefHeight="542.0" prefWidth="20.0" />
+            <Label layoutX="14.0" layoutY="46.0" text="Culturas:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="245.0" layoutY="46.0" text="Medições:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="see_button" layoutX="245.0" layoutY="637.0" mnemonicParsing="false" onAction="#handleSeeButton" text="Ver Medição" />
+            <Button fx:id="add_button" layoutX="832.0" layoutY="637.0" mnemonicParsing="false" onAction="#handleAddButton" text="Adicionar Medição" />
+            <Button fx:id="edit_button" layoutX="551.0" layoutY="637.0" mnemonicParsing="false" onAction="#handleEditButton" text="Editar Medição" />
+            <ListView fx:id="measurements_list" layoutX="245.0" layoutY="82.0" prefHeight="542.0" prefWidth="734.0" />
+         </children>
+      </AnchorPane>
+  </items>
+</SplitPane>

@@ -23,6 +23,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import utilities.Context;
 import utilities.Culture;
@@ -41,39 +42,44 @@ public class MainController {
 //	private IntegerBinding numCheckBoxesSelected = Bindings.size(selectedCheckBoxes);
 
 	@FXML
+	private ObservableList<Culture> listC = FXCollections.observableArrayList();
+	@FXML
+	private ListView<Culture> cultures_list;
+	@FXML
 	private ObservableList<Measurement> listM = FXCollections.observableArrayList();
 	@FXML
 	private ListView<Measurement> measurements_list;
 
 	@FXML
-	private Button addCulture_button ;
+	private Button add_button ;
 	@FXML 
 	private Button edit_button;
 	@FXML 
 	private Button adminMenu_button;
 	@FXML
 	private Button filtrar_button ;
-
-	
 	@FXML
-	public TextArea measurements_text_area;	
+	private Button see_button;
 	
 	private Connection conn = null;
 	
 	public void initialize() {
 		conn = Context.getInstance().getConn();
-
-		writeDataOnGui();
+		writeCulturesOnGui();
 		
 	}
 	
+	private void writeCulturesOnGui() {
+		getCulturesFromDB();
+		cultures_list.getItems().addAll(listC);
+	}
 	/*reads cultures from DB and writes on gui*/
-	private void writeDataOnGui() {
-		getMeasurementsFromDB();
+	private void writeMeasurementsOnGui(Culture c) {
+		getMeasurementsFromDB(c);
 		measurements_list.getItems().addAll(listM);
 	}
 
-	public void handleAddCultureButton() {
+	public void handleAddButton() {
 		load_add_measurement_scene();
 	}
 	
@@ -84,9 +90,47 @@ public class MainController {
 		load_admin_menu();
 	}
 	
+	public void handleSeeButton() {}
+	
 	public void handleFiltrarButton() {}
 	
-	public void displaySelected() {}
+	
+	
+	public void getCulturesFromDB() {
+		try {
+			PreparedStatement statement = conn.prepareStatement("SELECT * FROM cultures");
+			ResultSet results = statement.executeQuery();
+			while(results.next()) {
+				Culture culture = new Culture();
+				listC.add(culture);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
+	private void displaySelected(MouseEvent event) {
+		Culture culture = this.cultures_list.getSelectionModel().getSelectedItem();
+		if (culture!=null) {
+			writeMeasurementsOnGui(culture);
+		}
+	}
+	
+	public void getMeasurementsFromDB(Culture c) {
+		try {
+			PreparedStatement statement = conn.prepareStatement("SELECT * FROM measurements"); /* Devia ser o SP que permite ver as mediçoes dele*/
+			ResultSet results = statement.executeQuery();
+			while(results.next()) {
+				Measurement measurement = new Measurement();
+				listM.add(measurement);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	public void load_add_measurement_scene() {
 		FXMLLoader Loader = new FXMLLoader();
@@ -116,20 +160,5 @@ public class MainController {
 		stage.setScene(new Scene(p));
 		stage.setTitle("Admin menu");
 		stage.show();
-	}
-	
-	public void getMeasurementsFromDB() {
-		try {
-			PreparedStatement statement = conn.prepareStatement("SELECT * FROM measurements"); /* Devia ser o SP que permite ver as mediçoes dele*/
-			ResultSet results = statement.executeQuery();
-			while(results.next()) {
-				Measurement measurement = new Measurement();
-				listM.add(measurement);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 	}
 }
