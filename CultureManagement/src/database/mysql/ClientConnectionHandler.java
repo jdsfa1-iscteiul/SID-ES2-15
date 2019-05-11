@@ -32,5 +32,9 @@ public class ClientConnectionHandler {
 		this.username = username;
 	}
 	
+	public void resetClientConnection() {
+		instance=null;
+	}
+	
 
 }

@@ -18,7 +18,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import utilities.Context;
+
 
 public class LoginController {
 	@FXML
@@ -51,7 +51,6 @@ public class LoginController {
 			ClientConnectionHandler.getInstance().setDbConnection(connection);
 			ClientConnectionHandler.getInstance().setUsername(username);
 			
-			Context.getInstance().setConn(connection);
 			load_main_scene();
 			closeWindow();
 		} catch(SQLException e) {

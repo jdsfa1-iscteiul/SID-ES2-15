@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import database.mysql.ClientConnectionHandler;
 //import javafx.beans.binding.Bindings;
 //import javafx.beans.binding.IntegerBinding;
 import javafx.collections.FXCollections;
@@ -25,7 +26,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import utilities.Context;
 import utilities.Culture;
 import utilities.Measurement;
 
@@ -44,41 +44,40 @@ public class MainController {
 	@FXML
 	private ObservableList<Culture> listC = FXCollections.observableArrayList();
 	@FXML
-	private ListView<Culture> cultures_list;
+	private ListView<Culture> culturesList;
 	@FXML
 	private ObservableList<Measurement> listM = FXCollections.observableArrayList();
 	@FXML
-	private ListView<Measurement> measurements_list;
+	private ListView<Measurement> measurementsList;
 
 	@FXML
-	private Button add_button ;
+	private Button addButton ;
 	@FXML 
-	private Button edit_button;
+	private Button editButton;
 	@FXML 
-	private Button adminMenu_button;
+	private Button logoutButton;
 	@FXML
-	private Button filtrar_button ;
+	private Button filterButton ;
 	@FXML
-	private Button see_button;
+	private Button seeButton;
 	
 	private Connection conn = null;
 	
 	public void initialize() {
-		conn = Context.getInstance().getConn();
+		conn = ClientConnectionHandler.getInstance().getConnection();
 		writeCulturesOnGui();
 		
 	}
 	
 	private void writeCulturesOnGui() {
 		getCulturesFromDB();
-	//	cultures_list.getItems().addAll(listC);
-		cultures_list.setItems(listC);
+		culturesList.setItems(listC);
 	}
+	
 	/*reads cultures from DB and writes on gui*/
 	private void writeMeasurementsOnGui(Culture c) {
 		getMeasurementsFromDB(c);
-		measurements_list.setItems(listM);
-	//	measurements_list.getItems().addAll(listM);
+		measurementsList.setItems(listM);
 	}
 
 	public void handleAddButton() {
@@ -87,14 +86,16 @@ public class MainController {
 	
 	public void handleEditButton() {}
 	
-	public void handleAdminMenuButton() {
+	public void handleLogoutButton() {
 		
-		load_admin_menu();
+		load_login_menu();
+		closeWindow();
+		ClientConnectionHandler.getInstance().resetClientConnection();
 	}
 	
 	public void handleSeeButton() {}
 	
-	public void handleFiltrarButton() {}
+	public void handleFilterButton() {}
 	
 	
 	
@@ -113,8 +114,8 @@ public class MainController {
 	}
 	
 	@FXML
-	private void displaySelected(MouseEvent event) {
-		Culture culture = this.cultures_list.getSelectionModel().getSelectedItem();
+	private void displayMeasurementsForSelectedCulture(MouseEvent event) {
+		Culture culture = this.culturesList.getSelectionModel().getSelectedItem();
 		if (culture != null) {
 			writeMeasurementsOnGui(culture);
 		}
@@ -156,7 +157,7 @@ public class MainController {
 		Parent p = Loader.getRoot();
 		Stage stage = new Stage();
 		stage.setScene(new Scene(p));
-		stage.setTitle(Context.getInstance().getUsername());
+		stage.setTitle("Adicionar Medição");
 		stage.show();
 	}
 	
@@ -173,5 +174,25 @@ public class MainController {
 		stage.setScene(new Scene(p));
 		stage.setTitle("Admin menu");
 		stage.show();
+	}
+	
+	public void load_login_menu() {
+		FXMLLoader Loader = new FXMLLoader();
+		Loader.setLocation(getClass().getResource("../FXMLFiles/login.fxml"));
+		try {
+			Loader.load();
+		} catch (IOException e) {
+			Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
+		}
+		Parent p = Loader.getRoot();
+		Stage stage = new Stage();
+		stage.setScene(new Scene(p));
+		stage.setTitle("Login");
+		stage.show();
+	}
+	
+	public void closeWindow() {
+	    Stage stage = (Stage) logoutButton.getScene().getWindow();
+	    stage.close();
 	}
 }
