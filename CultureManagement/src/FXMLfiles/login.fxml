@@ -17,8 +17,8 @@
             <Image url="file:../CultureManagement/src/images/User_login_man_profile_account.png" />
          </image>
       </ImageView>
-      <PasswordField fx:id="password_box" layoutX="352.0" layoutY="337.0" promptText="Password" />
-      <Button fx:id="login_button" layoutX="415.0" layoutY="389.0" mnemonicParsing="false" onAction="#handleLoginButton" text="Log in" />
-      <TextField fx:id="username_box" layoutX="352.0" layoutY="290.0" promptText="Username" />
+      <PasswordField fx:id="passwordBox" layoutX="352.0" layoutY="337.0" promptText="Password" />
+      <Button fx:id="loginButton" layoutX="415.0" layoutY="389.0" mnemonicParsing="false" onAction="#handleLoginButton" text="Log in" />
+      <TextField fx:id="usernameBox" layoutX="352.0" layoutY="290.0" promptText="Username" />
    </children>
 </Pane>

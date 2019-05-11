@@ -21,8 +21,8 @@
                   <Image url="file:../CultureManagement/src/images/ISCTEIULNormasLogos-02.png" />
                </image>
             </ImageView>
-            <CheckBox fx:id="temperatura_checkbox" layoutX="26.0" layoutY="190.0" mnemonicParsing="false" text="Temperatura" textFill="WHITE" />
-            <CheckBox fx:id="luz_checkbox" layoutX="26.0" layoutY="227.0" mnemonicParsing="false" text="Luz" textFill="WHITE" />
+            <CheckBox fx:id="temperatureCheckbox" layoutX="26.0" layoutY="190.0" mnemonicParsing="false" text="Temperatura" textFill="WHITE" />
+            <CheckBox fx:id="lightCheckbox" layoutX="26.0" layoutY="227.0" mnemonicParsing="false" text="Luz" textFill="WHITE" />
             <Button fx:id="filtrar_button" layoutX="98.0" layoutY="304.0" mnemonicParsing="false" onAction="#handleFiltrarButton" text="Filtrar" />
             <ImageView fitHeight="57.0" fitWidth="64.0" layoutX="70.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true">
                <image>
