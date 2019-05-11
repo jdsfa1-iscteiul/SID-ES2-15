@@ -13,7 +13,7 @@
          <children>
             <ImageView fitHeight="873.0" fitWidth="466.0" layoutX="-42.0" layoutY="-29.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="file:../CultureManagement/src/images/Images/backgrounf.jpg" />
+                  <Image url="file:../CultureManagement/src/images/backgrounf.jpg" />
                </image>
             </ImageView>
             <ImageView fitHeight="158.0" fitWidth="250.0" layoutX="6.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
