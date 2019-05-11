@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<SplitPane dividerPositions="0.26979166666666665" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="664.0" prefWidth="962.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminInicialMenuController">
+<SplitPane dividerPositions="0.26979166666666665" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="664.0" prefWidth="962.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminAddResearcherController">
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="687.0" prefWidth="363.0">
          <children>
@@ -32,6 +32,27 @@
                </font>
             </Label>
          </children></AnchorPane>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="688.0" prefWidth="964.0" />
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="688.0" prefWidth="964.0">
+         <children>
+            <TitledPane animated="false" layoutX="6.0" prefHeight="662.0" prefWidth="691.0" text="Adicionar Investigador">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="270.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="file:../CultureManagement/src/images/User_login_man_profile_account.png" />
+                           </image>
+                        </ImageView>
+                        <TextField fx:id="nameBox" layoutX="112.0" layoutY="223.0" promptText="Name" />
+                        <TextField fx:id="titleIdBox" layoutX="386.0" layoutY="315.0" promptText="Title ID" />
+                        <TextField fx:id="usernameBox" layoutX="112.0" layoutY="271.0" promptText="Username" />
+                        <TextField fx:id="confirmPasswordBox" layoutX="386.0" layoutY="271.0" promptText="Confirm Password" />
+                        <TextField fx:id="passwordBox" layoutX="386.0" layoutY="223.0" promptText="Password" />
+                        <Button fx:id="addButton" layoutX="303.0" layoutY="370.0" mnemonicParsing="false" onAction="#handleAddButton" text="Adicionar" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </TitledPane>
+         </children></AnchorPane>
   </items>
 </SplitPane>

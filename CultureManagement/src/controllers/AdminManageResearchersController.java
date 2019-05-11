@@ -10,9 +10,29 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import utilities.Researcher;
 
-public class AdminInicialMenuController {
+public class AdminManageResearchersController {
+	@FXML
+	private ListView<Researcher> researchersList;
+	@FXML
+	private Button removeButton;
+	@FXML
+	private Button editButton;
+	
+	public void handleRemoveButton(){}
+	
+	public void handleEditButton(){}
+	
+	
+	
+	
+	
+	
+	//PARA O MENU LATERAL DO ADMIN FUNCIONAR
+	
 	@FXML
 	private Button addResearcherButton;
 	@FXML
@@ -109,4 +129,5 @@ public class AdminInicialMenuController {
 	    Stage stage = (Stage) b.getScene().getWindow();
 	    stage.close();
 	}
+
 }

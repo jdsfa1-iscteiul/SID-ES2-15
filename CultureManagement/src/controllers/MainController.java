@@ -87,7 +87,6 @@ public class MainController {
 	public void handleEditButton() {}
 	
 	public void handleLogoutButton() {
-		
 		load_login_menu();
 		closeWindow();
 		ClientConnectionHandler.getInstance().resetClientConnection();
