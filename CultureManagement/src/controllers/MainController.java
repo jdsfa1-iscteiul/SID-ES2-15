@@ -32,9 +32,9 @@ import utilities.Measurement;
 public class MainController {
 	
 	@FXML
-	private CheckBox luz_checkbox ;
+	private CheckBox lightCheckbox;
 	@FXML
-	private CheckBox temperatura_checkbox ;
+	private CheckBox temperatureCheckbox ;
 	
 	@FXML
 	private ObservableSet<CheckBox> selectedCheckBoxes = FXCollections.observableSet();
@@ -71,12 +71,14 @@ public class MainController {
 	
 	private void writeCulturesOnGui() {
 		getCulturesFromDB();
-		cultures_list.getItems().addAll(listC);
+	//	cultures_list.getItems().addAll(listC);
+		cultures_list.setItems(listC);
 	}
 	/*reads cultures from DB and writes on gui*/
 	private void writeMeasurementsOnGui(Culture c) {
 		getMeasurementsFromDB(c);
-		measurements_list.getItems().addAll(listM);
+		measurements_list.setItems(listM);
+	//	measurements_list.getItems().addAll(listM);
 	}
 
 	public void handleAddButton() {
@@ -98,10 +100,10 @@ public class MainController {
 	
 	public void getCulturesFromDB() {
 		try {
-			PreparedStatement statement = conn.prepareStatement("SELECT * FROM cultures");
+			PreparedStatement statement = conn.prepareStatement("SELECT * FROM culture");
 			ResultSet results = statement.executeQuery();
 			while(results.next()) {
-				Culture culture = new Culture();
+				Culture culture = new Culture(results.getString("culture_name"));
 				listC.add(culture);
 			}
 		} catch (SQLException e) {
@@ -113,17 +115,28 @@ public class MainController {
 	@FXML
 	private void displaySelected(MouseEvent event) {
 		Culture culture = this.cultures_list.getSelectionModel().getSelectedItem();
-		if (culture!=null) {
+		if (culture != null) {
 			writeMeasurementsOnGui(culture);
 		}
 	}
 	
 	public void getMeasurementsFromDB(Culture c) {
 		try {
-			PreparedStatement statement = conn.prepareStatement("SELECT * FROM measurements"); /* Devia ser o SP que permite ver as mediçoes dele*/
+			
+			listM.clear();
+			
+			/* Devia ser o SP que permite ver as mediçoes dele*/
+			String sql = "SELECT * FROM measurements, variable, culture "
+					+ "WHERE measurements.variable_id = variable.variable_id"
+					+ " AND culture.culture_name = " + "'" + c.getCultureName() + "'" +
+					" AND culture.culture_id = measurements.culture_id";
+			
+			PreparedStatement statement = conn.prepareStatement(sql); 
+			
 			ResultSet results = statement.executeQuery();
 			while(results.next()) {
-				Measurement measurement = new Measurement();
+				Measurement measurement = new Measurement(results.getString("variable_name"), 
+											results.getString("timestamp"), results.getString("value"));
 				listM.add(measurement);
 			}
 		} catch (SQLException e) {

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import database.mysql.ClientConnectionHandler;
 import database.mysql.ConnectionMariaDB;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,20 +22,20 @@ import utilities.Context;
 
 public class LoginController {
 	@FXML
-	private TextField username_box;
+	private TextField usernameBox;
 	
 	@FXML
-	private TextField password_box;
+	private TextField passwordBox;
 	
 	@FXML
-	private Button login_button;
+	private Button loginButton;
 	
-	private Connection conn;
+//	private Connection conn;
 	
 	private String host = "localhost:3306/";
 	private String dbName = "grupo15_main";
-	private String username="root";
-	private String password="";
+//	private String username="root";
+//	private String password="";
 			
 	
 	
@@ -43,13 +44,19 @@ public class LoginController {
 	 */
 	public void handleLoginButton() {
 		try {
-			this.conn=DriverManager.getConnection("jdbc:mariadb://"+host+dbName+"?user="+username+"&password="+password);
-			Context.getInstance().setConn(conn);
+			String username = usernameBox.getText();
+			String password = passwordBox.getText();
+			Connection connection = DriverManager.getConnection("jdbc:mariadb://"+host+dbName+"?user="
+																			+username+"&password="+password);
+			ClientConnectionHandler.getInstance().setDbConnection(connection);
+			ClientConnectionHandler.getInstance().setUsername(username);
+			
+			Context.getInstance().setConn(connection);
 			load_main_scene();
 			closeWindow();
 		} catch(SQLException e) {
 			Alert errorAlert = new Alert(AlertType.ERROR);
-			errorAlert.setHeaderText("Impossivel conectar à base de dados");
+			errorAlert.setHeaderText("Impossível conectar à base de dados");
 			errorAlert.setContentText("O username ou a password estão incorrectos");
 			errorAlert.showAndWait();
 		}
@@ -60,7 +67,7 @@ public class LoginController {
 	 */
 	public void load_main_scene() {
 		FXMLLoader Loader = new FXMLLoader();
-		Loader.setLocation(getClass().getResource("../FXMLFiles/main_gui.fxml"));
+		Loader.setLocation(getClass().getResource("../FXMLfiles/main_gui.fxml"));
 		try {
 			Loader.load();
 		} catch (IOException e) {
@@ -74,7 +81,7 @@ public class LoginController {
 	}
 	
 	public void closeWindow() {
-	    Stage stage = (Stage) login_button.getScene().getWindow();
+	    Stage stage = (Stage) loginButton.getScene().getWindow();
 	    stage.close();
 	}
 }
