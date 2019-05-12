@@ -1,12 +1,12 @@
 package controllers;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import org.mariadb.jdbc.MariaDbStatement;
+//import java.sql.Connection;
+//import java.sql.DriverManager;
+//import java.sql.PreparedStatement;
+//import java.sql.ResultSet;
+//import java.sql.SQLException;
+//
+//import org.mariadb.jdbc.MariaDbStatement;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -28,7 +28,7 @@ public class AddMeasurementController {
 	private Button adicionar_button;
 	
 	
-	private Connection conn;
+	//private Connection conn;
 
 	
 	public void handleAdicionarButton() {

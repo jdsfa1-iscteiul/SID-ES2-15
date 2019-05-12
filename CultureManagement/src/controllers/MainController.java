@@ -3,7 +3,6 @@ package controllers;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,7 +22,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
+//import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import utilities.Culture;
@@ -100,14 +99,15 @@ public class MainController {
 	
 	public void getCulturesFromDB() {
 		try {
-			PreparedStatement statement = conn.prepareStatement("SELECT * FROM culture");
-			ResultSet results = statement.executeQuery();
+			ClientConnectionHandler.getInstance().prepareStatement("Call show_cultures");
+			ClientConnectionHandler.getInstance().executeStatement();
+			ResultSet results = ClientConnectionHandler.getInstance().getQueryResults();
+
 			while(results.next()) {
 				Culture culture = new Culture(results.getString("culture_name"));
 				listC.add(culture);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -126,17 +126,25 @@ public class MainController {
 			listM.clear();
 			
 			/* Devia ser o SP que permite ver as mediçoes dele*/
-			String sql = "SELECT * FROM measurements, variable, culture "
-					+ "WHERE measurements.variable_id = variable.variable_id"
-					+ " AND culture.culture_name = " + "'" + c.getCultureName() + "'" +
-					" AND culture.culture_id = measurements.culture_id";
 			
-			PreparedStatement statement = conn.prepareStatement(sql); 
+			ClientConnectionHandler.getInstance().prepareStatement("CALL load_researcher_data");
+			ClientConnectionHandler.getInstance().executeStatement();
 			
-			ResultSet results = statement.executeQuery();
+//			String sql = "SELECT * FROM measurements, variable, culture "
+//					+ "WHERE measurements.variable_id = variable.variable_id"
+//					+ " AND culture.culture_name = " + "'" + c.getCultureName() + "'" +
+//					" AND culture.culture_id = measurements.culture_id";
+			
+//			PreparedStatement statement = conn.prepareStatement(sql); 
+			
+//			ResultSet results = statement.executeQuery();
+			
+			ResultSet results = ClientConnectionHandler.getInstance().getQueryResults();
+			
 			while(results.next()) {
-				Measurement measurement = new Measurement(results.getString("variable_name"), 
-											results.getString("timestamp"), results.getString("value"));
+//				Measurement measurement = new Measurement(results.getString("variable_name"), 
+//											results.getString("timestamp"), results.getString("value"));
+				Measurement measurement = new Measurement(results);
 				listM.add(measurement);
 			}
 		} catch (SQLException e) {
