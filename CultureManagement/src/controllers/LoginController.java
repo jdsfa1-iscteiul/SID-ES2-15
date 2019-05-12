@@ -8,7 +8,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import database.mysql.ClientConnectionHandler;
-import database.mysql.ConnectionMariaDB;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,6 +17,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import utilities.Researcher;
 
 
 public class LoginController {
@@ -30,10 +30,8 @@ public class LoginController {
 	@FXML
 	private Button loginButton;
 	
-//	private Connection conn;
-	
 	private String host = "localhost:3306/";
-	private String dbName = "grupo15_main";
+	private String dbName = "grupo15_culture_management";
 //	private String username="root";
 //	private String password="";
 			
@@ -48,8 +46,8 @@ public class LoginController {
 			String password = passwordBox.getText();
 			Connection connection = DriverManager.getConnection("jdbc:mariadb://"+host+dbName+"?user="
 																			+username+"&password="+password);
-			ClientConnectionHandler.getInstance().setDbConnection(connection);
-			ClientConnectionHandler.getInstance().setUsername(username);
+			ClientConnectionHandler.getInstance().setDbConnection(connection, username);
+//			ClientConnectionHandler.getInstance().setUsername(username);
 			
 			load_main_scene();
 			closeWindow();
@@ -66,7 +64,12 @@ public class LoginController {
 	 */
 	public void load_main_scene() {
 		FXMLLoader Loader = new FXMLLoader();
-		Loader.setLocation(getClass().getResource("../FXMLfiles/main_gui.fxml"));
+//		if(ClientConnectionHandler.getInstance().getAccountType().equals("Researcher"))
+		if(ClientConnectionHandler.getInstance().getUser() instanceof Researcher)
+			Loader.setLocation(getClass().getResource("../FXMLfiles/main_gui.fxml"));
+		else
+			Loader.setLocation(getClass().getResource("../FXMLfiles/adminInicialMenu.fxml"));
+		
 		try {
 			Loader.load();
 		} catch (IOException e) {
