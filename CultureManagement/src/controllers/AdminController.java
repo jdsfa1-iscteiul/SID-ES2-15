@@ -50,10 +50,10 @@ public class AdminController {
 	
 	public void handleManageResearchersButton() {
 		load_scene("(admin)manageResearcherMenu");
-//		ObservableList<Researcher> observableResearcherList = FXCollections.observableArrayList();
 //		Administrator admin = (Administrator)ClientConnectionHandler.getInstance().getUser();
-//		for(Researcher researcher: admin.getResearcherList())
+//		for(Researcher researcher: admin.getResearcherList()) {
 //			observableResearcherList.add(researcher);
+//		}
 //		researchersList.setItems(observableResearcherList);
 		closeWindow(logoutButton);
 	}
@@ -122,6 +122,8 @@ public class AdminController {
 	}
 	
 	/* Gerir Investigadores */
+	@FXML
+	ObservableList<Researcher> observableResearcherList = FXCollections.observableArrayList();
 	@FXML
 	private ListView<Researcher> researchersList;
 	@FXML

@@ -89,7 +89,9 @@ public class ResearcherController {
 		load_scene("(researcher)seeOrEditMenu");
 	}
 
-	public void handleFilterButton() {}
+	public void handleFilterButton() {
+		
+	}
 
 	public void handleLogoutButton() {
 		load_scene("login");
@@ -105,12 +107,10 @@ public class ResearcherController {
 	}
 
 	private void writeSensorMeasurementsOnGui() {
-		for(LightMeasurement obj: ClientConnectionHandler.getInstance().getSystem().getLightMeasurements()) {
+		for(LightMeasurement obj: ClientConnectionHandler.getInstance().getSystem().getLightMeasurements()) 
 			listL.add(obj);
-		}
-		for(TemperatureMeasurement obj: ClientConnectionHandler.getInstance().getSystem().getTemperatureMeasurements()) {
+		for(TemperatureMeasurement obj: ClientConnectionHandler.getInstance().getSystem().getTemperatureMeasurements()) 
 			listT.add(obj);
-		}
 		lightList.setItems(listL);
 		temperatureList.setItems(listT);
 	}
@@ -129,7 +129,7 @@ public class ResearcherController {
 	public void getCulturesFromDB() {
 		listC.clear();
 		Researcher researcher = (Researcher)ClientConnectionHandler.getInstance().getUser();
-		for(Culture culture: researcher.getCultureList())
+		for(Culture culture: researcher.getResearcherCultureList())
 			listC.add(culture);
 	}
 
