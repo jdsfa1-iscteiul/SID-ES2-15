@@ -20,6 +20,9 @@ public class Administrator extends DatabaseUser {
 		super(username);
 		try {
 			initializeResearcherList();
+			initializeCultureList();
+			initializeVariableList();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -55,7 +58,34 @@ public class Administrator extends DatabaseUser {
 		ResultSet results = ClientConnectionHandler.getInstance().getQueryResults();
 		while(results.next())
 			researcherList.add(new Researcher(results));
-		
+	}
+	
+	private void initializeCultureList() throws SQLException {
+		ClientConnectionHandler.getInstance().prepareStatement("SELECT * FROM culture");
+		ClientConnectionHandler.getInstance().executeStatement();
+		ResultSet results = ClientConnectionHandler.getInstance().getQueryResults();
+		while(results.next())
+			cultureList.add(new Culture(results));
+	}
+	
+	private void initializeVariableList() throws SQLException {
+		ClientConnectionHandler.getInstance().prepareStatement("SELECT * FROM variable");
+		ClientConnectionHandler.getInstance().executeStatement();
+		ResultSet results = ClientConnectionHandler.getInstance().getQueryResults();
+		while(results.next())
+			variableList.add(new Variable(results));
+	}
+	
+	public void updateResearcherList() throws SQLException {
+		initializeResearcherList();
+	}
+	
+	public void updateCultureList() throws SQLException {
+		initializeCultureList();
+	}
+	
+	public void updateVariableList() throws SQLException {
+		initializeVariableList();
 	}
 
 	

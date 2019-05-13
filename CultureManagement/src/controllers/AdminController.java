@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,9 +41,27 @@ public class AdminController {
 	@FXML
 	private Button manageVariablesButton;
 	@FXML
-	private Button associateVariableButton;
-	@FXML
 	private Button logoutButton;
+	
+	private Administrator admin;
+	
+	/* Comum a todos */
+	public void initialize() {
+		admin = (Administrator)ClientConnectionHandler.getInstance().getUser();
+		if(researchersList!=null) {
+			writeResearchersOnGui();
+		} 
+		if(researcherCultureAddList!=null) {
+			writeResearchersOnGuiToAddCulture();
+		} 
+		if(culturesList!=null) {
+			writeCulturesOnGuiToManageCulture();
+		}
+		
+		if(variablesList!=null) {
+			writeVariableOnGuiToManageVariable();
+		}
+	}
 	
 	
 	public void handleAddResearcherButton() {
@@ -52,11 +71,6 @@ public class AdminController {
 	
 	public void handleManageResearchersButton() {
 		load_scene("(admin)manageResearcherMenu");
-//		Administrator admin = (Administrator)ClientConnectionHandler.getInstance().getUser();
-//		for(Researcher researcher: admin.getResearcherList()) {
-//			observableResearcherList.add(researcher);
-//		}
-//		researchersList.setItems(observableResearcherList);
 		closeWindow(logoutButton);
 	}
 	
@@ -77,11 +91,6 @@ public class AdminController {
 	
 	public void handleManageVariablesButton() {
 		load_scene("(admin)manageVariablesMenu");
-		closeWindow(logoutButton);
-	}
-	
-	public void handleAssociateVariableButton() {
-		load_scene("(admin)associateVariablesMenu");
 		closeWindow(logoutButton);
 	}
 	
@@ -108,6 +117,8 @@ public class AdminController {
 	@FXML
 	private TextField titleIdUserBox;
 	
+	
+	
 	public void handleAddThisResearcherButton() {
 		String email = emailUserBox.getText();
 		String name = nameUserBox.getText();
@@ -118,17 +129,21 @@ public class AdminController {
 		try {
 			ClientConnectionHandler.getInstance().prepareStatement(sqlCommand);
 			ClientConnectionHandler.getInstance().executeStatement();
+			this.admin.updateResearcherList();
+			load_scene("(admin)initialMenu");
+			closeWindow(addThisResearcherButton);
 		} catch (SQLException e) {
 			Alert errorAlert = new Alert(AlertType.ERROR);
 			errorAlert.setHeaderText("Impossível criar investigador");
 			errorAlert.setContentText("Dados duplicados ou incorretos");
 			errorAlert.showAndWait();
-		}		
+		}
 	}
 	
 	/* Gerir Investigadores */
+	
 	@FXML
-	ObservableList<Researcher> observableResearcherList = FXCollections.observableArrayList();
+	ObservableList<Researcher> listR = FXCollections.observableArrayList();
 	@FXML
 	private ListView<Researcher> researchersList;
 	@FXML
@@ -136,42 +151,130 @@ public class AdminController {
 	@FXML
 	private Button editResearcherButton;
 	
-	
-	public void handleRemoveResearcherButton() {
-
+	public void handleRemoveResearcherButton() throws SQLException {
+		Researcher researcher = this.researchersList.getSelectionModel().getSelectedItem();
+		String sqlC = "DELETE FROM researcher WHERE username_db='"; 
+		System.out.println(sqlC+researcher.getUsername());
+		try {
+			ClientConnectionHandler.getInstance().prepareStatement(sqlC+researcher.getUsername()+"'");
+			ClientConnectionHandler.getInstance().executeStatement();
+			admin.getResearcherList().remove(researcher);
+			load_scene("(admin)initialMenu");
+			closeWindow(removeResearcherButton);
+			//closeWindow(removeResearcherButton);
+		} catch (SQLException e) {
+		Alert errorAlert = new Alert(AlertType.ERROR);
+		errorAlert.setHeaderText("Impossível apagar");
+		errorAlert.setContentText("Este investigador é chave estrangeira noutra tabela.");
+		errorAlert.showAndWait();
+		}
 	}
 	
 	public void handleEditResearcherButton() {
 
 	}
 	
+	public void writeResearchersOnGui() {
+		listR.clear();
+		getResearchersFromDB();
+		researchersList.setItems(listR);
+	}
+	
+	public void getResearchersFromDB() {
+		for(Researcher r: admin.getResearcherList()) {
+			listR.add(r);
+		}
+	}
+	
 	/* Adicionar Cultura */
 	
 	@FXML
 	private Button addThisCultureButton;
+	@FXML
+	private TextField cultureNameBox;
+	@FXML
+	private TextField cultureDescriptionBox;
+	@FXML 
+	private ListView<Researcher> researcherCultureAddList;
+	@FXML
+	ObservableList<Researcher> listRC = FXCollections.observableArrayList();
 	
-	public void handleAddThisCultureButton() {
-
+	public void handleAddThisCultureButton() throws SQLException {
+		addCultureToDB();
+	}
+	
+	private void addCultureToDB() throws SQLException {
+		Researcher researcher = this.researcherCultureAddList.getSelectionModel().getSelectedItem();
+			if (researcher!=null) {
+				String name = cultureNameBox.getText();
+				String desc = cultureDescriptionBox.getText();
+				String values="'"+name+"','"+desc+"','"+researcher.getUsername()+"'";
+				String d = "INSERT INTO culture(`culture_name`, `culture_description`, `researcher`) VALUES ("+values+")";
+				System.out.println(d);
+				admin.updateCultureList();
+				ClientConnectionHandler.getInstance().prepareStatement(d);
+				ClientConnectionHandler.getInstance().executeStatement();
+				
+			}
+	}
+	
+	public void writeResearchersOnGuiToAddCulture() {
+		listRC.clear();
+		getResearchersFromDBToAddCulture();
+		researcherCultureAddList.setItems(listRC);
+	}
+	
+	public void getResearchersFromDBToAddCulture() {
+		for(Researcher r: admin.getResearcherList()) {
+			listRC.add(r);
+		}
 	}
 	
 	/* Gerir Cultura */
 	@FXML
 	private ListView<Culture> culturesList;
 	@FXML
+	ObservableList<Culture> listCULL = FXCollections.observableArrayList();
+	
+	@FXML
 	private Button editCultureButton;
 	@FXML
 	private Button removeCultureButton;
-	@FXML
-	private Button associateCultureButton;
 	
 	public void handleEditCultureButton() {
 
 	}
 	public void handleRemoveCultureButton() {
-
+		Culture culture = this.culturesList.getSelectionModel().getSelectedItem();
+		if (culture!=null) {
+			String id = String.valueOf(culture.getCultureId());
+			String sql = "DELETE FROM culture WHERE culture_id="+id;
+			System.out.println(sql);
+			try {
+				ClientConnectionHandler.getInstance().prepareStatement(sql);
+				ClientConnectionHandler.getInstance().executeStatement();
+				admin.getCultureList().remove(culture);
+				load_scene("(admin)initialMenu");
+				closeWindow(removeCultureButton);
+			} catch (SQLException e) {
+				Alert errorAlert = new Alert(AlertType.ERROR);
+				errorAlert.setHeaderText("Impossível apagar");
+				errorAlert.setContentText("Esta cultura é chave estrangeira noutra tabela.");
+				errorAlert.showAndWait();
+			}
+		}
 	}
-	public void handleAssociateCultureButton() {
-
+	
+	public void writeCulturesOnGuiToManageCulture() {
+		listCULL.clear();
+		getCulturesFromDBToManageCulture();
+		culturesList.setItems(listCULL);
+	}
+	
+	public void getCulturesFromDBToManageCulture() {
+		for(Culture c: admin.getCultureList()) {
+			listCULL.add(c);
+		}
 	}
 	
 	/*Adicionar Variável*/
@@ -181,11 +284,26 @@ public class AdminController {
 	private TextField upperLimitBox;
 	@FXML
 	private TextField lowerLimitBox;
+	@FXML
+	private Button addConfirmVariableButton;
+	
+	public void handleAddConfirmVariableButton() throws SQLException {
+		String name = variableNameBox.getText();
+		String d = "INSERT INTO variable(`variable_name`) VALUES ('"+name+"')";
+		System.out.println(d);
+		ClientConnectionHandler.getInstance().prepareStatement(d);
+		ClientConnectionHandler.getInstance().executeStatement();
+		admin.updateVariableList();
+		load_scene("(admin)initialMenu");
+		closeWindow(addConfirmVariableButton);
+	}
 	
 	
 	/* Gerir variáveis */
 	@FXML
 	private ListView<Variable> variablesList;
+	@FXML
+	ObservableList<Variable> listV = FXCollections.observableArrayList();
 	@FXML
 	private Button removeVariableButton;
 	@FXML
@@ -193,7 +311,35 @@ public class AdminController {
 	
 	
 	public void handleRemoveVariableButton() {
-
+		Variable variable = this.variablesList.getSelectionModel().getSelectedItem();
+		if (variable!=null) {
+			String id = String.valueOf(variable.getVariableId());
+			String sql = "DELETE FROM variable WHERE variable_id="+id;
+			System.out.println(sql);
+			try {
+				ClientConnectionHandler.getInstance().prepareStatement(sql);
+				ClientConnectionHandler.getInstance().executeStatement();
+				admin.getVariableList().remove(variable);
+				load_scene("(admin)initialMenu");
+				closeWindow(removeVariableButton);
+			} catch (SQLException e) {
+				Alert errorAlert = new Alert(AlertType.ERROR);
+				errorAlert.setHeaderText("Impossível apagar");
+				errorAlert.setContentText("Esta variável é chave estrangeira noutra tabela.");
+				errorAlert.showAndWait();
+			}
+		}
+	}
+	
+	public void writeVariableOnGuiToManageVariable() {
+		getVariablesFromDBToManageVariable();
+		variablesList.setItems(listV);
+	}
+	
+	public void getVariablesFromDBToManageVariable() {
+		for(Variable v: admin.getVariableList()) {
+			listV.add(v);
+		}
 	}
 	
 	public void handleEditVariableButton() {
