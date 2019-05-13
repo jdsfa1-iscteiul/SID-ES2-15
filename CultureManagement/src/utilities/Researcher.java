@@ -144,4 +144,11 @@ public class Researcher extends DatabaseUser{
 	public String getUserType() {
 		return "Researcher";
 	}
+
+	@Override
+	public String toString() {
+		return name;
+	}
+	
+	
 }

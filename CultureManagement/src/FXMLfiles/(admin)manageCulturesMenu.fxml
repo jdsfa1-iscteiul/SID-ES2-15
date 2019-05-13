@@ -25,7 +25,6 @@
             <Button fx:id="addResearcherButton" layoutX="36.0" layoutY="216.0" mnemonicParsing="false" onAction="#handleAddResearcherButton" prefHeight="30.0" prefWidth="169.0" text="Adicionar Investigador" />
             <Button fx:id="addVariableButton" layoutX="37.0" layoutY="382.0" mnemonicParsing="false" onAction="#handleAddVariableButton" prefHeight="27.0" prefWidth="169.0" text="Adicionar Variável" />
             <Button fx:id="manageResearchersButton" layoutX="37.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleManageResearchersButton" prefHeight="19.0" prefWidth="169.0" text="Gerir Investigadores" />
-            <Button fx:id="associateVariableButton" layoutX="38.0" layoutY="460.0" mnemonicParsing="false" onAction="#handleAssociateVariableButton" prefHeight="27.0" prefWidth="171.0" text="Associar Variáveis" />
             <Label layoutX="43.0" layoutY="172.0" text="Escolha uma opção:" textFill="WHITE">
                <font>
                   <Font size="18.0" />
@@ -50,11 +49,6 @@
                </font>
             </Button>
             <Button fx:id="removeCultureButton" layoutX="522.0" layoutY="275.0" mnemonicParsing="false" onAction="#handleRemoveCultureButton" prefHeight="36.0" prefWidth="123.0" text="Remover">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="associateCultureButton" layoutX="370.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleAssociateCultureButton" prefHeight="36.0" prefWidth="278.0" text="Associar a Investigador">
                <font>
                   <Font size="18.0" />
                </font>

@@ -25,7 +25,6 @@
             <Button fx:id="addResearcherButton" layoutX="36.0" layoutY="216.0" mnemonicParsing="false" onAction="#handleAddResearcherButton" prefHeight="30.0" prefWidth="169.0" text="Adicionar Investigador" />
             <Button fx:id="addVariableButton" layoutX="37.0" layoutY="382.0" mnemonicParsing="false" onAction="#handleAddVariableButton" prefHeight="27.0" prefWidth="169.0" text="Adicionar Variável" />
             <Button fx:id="manageResearchersButton" layoutX="37.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleManageResearchersButton" prefHeight="19.0" prefWidth="169.0" text="Gerir Investigadores" />
-            <Button fx:id="associateVariableButton" layoutX="38.0" layoutY="460.0" mnemonicParsing="false" onAction="#handleAssociateVariableButton" prefHeight="27.0" prefWidth="171.0" text="Associar Variáveis" />
             <Label layoutX="43.0" layoutY="172.0" text="Escolha uma opção:" textFill="WHITE">
                <font>
                   <Font size="18.0" />
@@ -37,10 +36,10 @@
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="688.0" prefWidth="964.0">
          <children>
-            <TextField layoutX="118.0" layoutY="217.0" promptText="Name" />
-            <TextField alignment="TOP_LEFT" layoutX="119.0" layoutY="294.0" prefHeight="131.0" prefWidth="343.0" promptText="Description" />
-            <Label layoutX="118.0" layoutY="197.0" text="Nome:" />
-            <Label layoutX="120.0" layoutY="274.0" text="Descrição:" />
+            <TextField fx:id="cultureNameBox" layoutX="109.0" layoutY="157.0" promptText="Name" />
+            <TextField fx:id="cultureDescriptionBox" alignment="TOP_LEFT" layoutX="111.0" layoutY="223.0" prefHeight="131.0" prefWidth="343.0" promptText="Description" />
+            <Label layoutX="108.0" layoutY="136.0" text="Nome:" />
+            <Label layoutX="111.0" layoutY="197.0" text="Descrição:" />
             <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="-1.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="file:../CultureManagement/src/images/bulb_icon-icons.com_74600.png" />
@@ -51,7 +50,9 @@
                   <Image url="file:../CultureManagement/src/images/temperature-186-532268.png" />
                </image>
             </ImageView>
-            <Button fx:id="addThisCultureButton" layoutX="258.0" layoutY="457.0" mnemonicParsing="false" onAction="#handleAddThisCultureButton" text="Adicionar" />
+            <Button fx:id="addThisCultureButton" layoutX="320.0" layoutY="615.0" mnemonicParsing="false" onAction="#handleAddThisCultureButton" text="Adicionar" />
+            <ListView fx:id="researcherCultureAddList" layoutX="112.0" layoutY="393.0" prefHeight="203.0" prefWidth="142.0" />
+            <Label layoutX="111.0" layoutY="373.0" text="Investigador a associar:" />
          </children></AnchorPane>
   </items>
 </SplitPane>
