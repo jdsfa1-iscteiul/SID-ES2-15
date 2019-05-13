@@ -31,7 +31,7 @@ public abstract class DatabaseUser {
 	}
 	
 	private void initializeCultureList() throws SQLException {
-		ClientConnectionHandler.getInstance().prepareStatement("CALL show_all_cultures()");
+		ClientConnectionHandler.getInstance().prepareStatement("CALL show_all_cultures");
 		ClientConnectionHandler.getInstance().executeStatement();
 		ResultSet results = ClientConnectionHandler.getInstance().getQueryResults();
 		while(results.next()) 

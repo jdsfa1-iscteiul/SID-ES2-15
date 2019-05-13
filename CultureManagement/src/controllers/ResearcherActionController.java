@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import database.mysql.ClientConnectionHandler;
@@ -23,12 +24,12 @@ import utilities.Variable;
 import utilities.VariableBoundaries;
 
 public class ResearcherActionController {
-	
-	
+
+
 	//Menu de ver ou editar medição
-	
+
 	private Researcher researcher;
-	
+
 	@FXML
 	private TextField actionCultureBox;
 	@FXML
@@ -42,14 +43,52 @@ public class ResearcherActionController {
 	@FXML
 	private Button exitButton;
 	
+	@FXML
+	private ListView<Culture> culturesListSeeEdit;
+	@FXML
+	private ListView<Variable> variablesListSeeEdit;
+
+	@FXML
+	private void displayVariablesForSeeEdit() {
+		variablesListAddAux.clear();
+		Culture culture = this.culturesListSeeEdit.getSelectionModel().getSelectedItem();
+		if (culture != null) {
+			for(VariableBoundaries vb: researcher.getVariableBoundariesList())
+				if(vb.getCulture().equals(culture) && !variablesListAddAux.contains(vb.getVariable()))
+					variablesListAddAux.add(vb.getVariable());
+		}
+		variablesListSeeEdit.setItems(variablesListAddAux);
+	}
+
 	public void handleSaveButton() {
 		
-	}
-	
-	public void handleExitButton() {
+		actionValueBox.getText();
 		
+		if(variablesListSeeEdit.getSelectionModel().getSelectedItem() != null) {
+			Culture culture = culturesListSeeEdit.getSelectionModel().getSelectedItem();
+			Variable variable = variablesListSeeEdit.getSelectionModel().getSelectedItem();
+
+			try {
+				String sqlCommand = "Update measurements Set "; 
+				sqlCommand += "timestamp = '"+actionDateBox.getText()+"', value = "+actionValueBox.getText()+" where timestamp = '" + ClientConnectionHandler.getInstance().getSelectedMeasurement().getTimestamp() +"'";
+				System.out.println(sqlCommand);
+				ClientConnectionHandler.getInstance().prepareStatement(sqlCommand);
+				ClientConnectionHandler.getInstance().executeStatement();
+				researcher.updateResearcherLists();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}	
+		}
+		
+		ClientConnectionHandler.getInstance().setSelectedMeasurement(null);
+		closeWindow(exitButton);
 	}
-	
+
+	public void handleExitButton() {
+		ClientConnectionHandler.getInstance().setSelectedMeasurement(null);
+		closeWindow(exitButton);
+	}
+
 	public void initialize() {
 		researcher = (Researcher)ClientConnectionHandler.getInstance().getUser();
 		for(Culture culture: researcher.getCultureList()) {
@@ -60,34 +99,61 @@ public class ResearcherActionController {
 			culturesAssociateList.setItems(cultureAssociateAuxList);
 		if(culturesListAddMeasurement != null)
 			culturesListAddMeasurement.setItems(cultureAssociateAuxList);
+		if(culturesListSeeEdit!=null)
+			culturesListSeeEdit.setItems(cultureAssociateAuxList);
 	}
-	
-	
+
+
 	//Menu adicionar medicao 
 	@FXML
 	private ObservableList<Culture> culturesListAddAux = FXCollections.observableArrayList();
 	@FXML
 	private ListView<Culture> culturesListAddMeasurement;
 	@FXML
-	private ObservableList<VariableBoundaries> variablesListAddAux = FXCollections.observableArrayList();
+	private ObservableList<Variable> variablesListAddAux = FXCollections.observableArrayList();
 	@FXML
-	private ListView<VariableBoundaries> variablesListAddMeasurement;
+	private ListView<Variable> variablesListAddMeasurement;
 	@FXML
 	private TextField valueBox;
 	@FXML
 	private Button addMeasurementButton;
-	
+
 	public void handleAddMeasurementButton() {
-		
+		String time = new Timestamp(System.currentTimeMillis()).toString();
+		if(variablesListAddMeasurement.getSelectionModel().getSelectedItem() != null) {
+			Culture culture = culturesListAddMeasurement.getSelectionModel().getSelectedItem();
+			Variable variable = variablesListAddMeasurement.getSelectionModel().getSelectedItem();
+
+			try {
+				String sqlCommand = "INSERT INTO measurements (culture_id, variable_id,timestamp, value) "; 
+				sqlCommand += "VALUES ("+culture.getCultureId()+","+variable.getVariableId()+",'"+time+"',"+valueBox.getText()+")";
+				System.out.println(sqlCommand);
+				ClientConnectionHandler.getInstance().prepareStatement(sqlCommand);
+				ClientConnectionHandler.getInstance().executeStatement();
+				researcher.updateResearcherLists();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}	
+		}
 		closeWindow(addMeasurementButton);
 	}
 	
+	@FXML
+	private void displayVariablesForAddMeasurement() {
+		variablesListAddAux.clear();
+		Culture culture = this.culturesListAddMeasurement.getSelectionModel().getSelectedItem();
+		if (culture != null) {
+			for(VariableBoundaries vb: researcher.getVariableBoundariesList())
+				if(vb.getCulture().equals(culture) && !variablesListAddAux.contains(vb.getVariable()))
+					variablesListAddAux.add(vb.getVariable());
+		}
+		variablesListAddMeasurement.setItems(variablesListAddAux);
+	}
+
 	//Menu associar variável
-	
+
 	@FXML
 	private Button cancelButton;
-	@FXML
-	private Button logoutButton;
 	@FXML
 	private Button associateButton;
 	@FXML
@@ -108,7 +174,7 @@ public class ResearcherActionController {
 	private ListView<Variable> variablesAssociatedList;
 	@FXML
 	private ListView<Variable> variablesNotAssociatedList;
-	
+
 	@FXML
 	private void displayVariablesForSelectedCulture(MouseEvent event) {
 		variablesAssociatedAuxList.clear();
@@ -120,12 +186,12 @@ public class ResearcherActionController {
 					variablesAssociatedAuxList.add(vb.getVariable());
 			for(Variable var: researcher.getVariableList())
 				if(!variablesAssociatedAuxList.contains(var))
-				variablesNotAssociatedAuxList.add(var);
+					variablesNotAssociatedAuxList.add(var);
 		}
 		variablesAssociatedList.setItems(variablesAssociatedAuxList);
 		variablesNotAssociatedList.setItems(variablesNotAssociatedAuxList);
 	}
-	
+
 	public void handleAssociateButton() {
 		if(variablesNotAssociatedList.getSelectionModel().getSelectedItem() != null) {
 			Culture culture = culturesAssociateList.getSelectionModel().getSelectedItem();
@@ -140,15 +206,15 @@ public class ResearcherActionController {
 				ClientConnectionHandler.getInstance().prepareStatement(sqlCommand);
 				ClientConnectionHandler.getInstance().executeStatement();
 				researcher.getVariableBoundariesList().add(newVb);
-				
+
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			
+
 		}
 		closeWindow(associateButton);
 	}
-	
+
 	public void handleDisassociateButton() {
 		if(variablesAssociatedList.getSelectionModel().getSelectedItem() != null) {
 			Culture culture = culturesAssociateList.getSelectionModel().getSelectedItem();
@@ -161,26 +227,22 @@ public class ResearcherActionController {
 				ClientConnectionHandler.getInstance().prepareStatement(sqlCommand);
 				ClientConnectionHandler.getInstance().executeStatement();
 				researcher.getVariableBoundariesList().remove(oldVb);
-				
+
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			
+
 		}
 		closeWindow(associateButton);
 	}
-	
+
 	public void handleCancelButton() {
 		closeWindow(cancelButton);
 	}
 	
 	
-	public void handleLogoutButton() {
-		load_scene("login");
-		closeWindow(logoutButton);
-		ClientConnectionHandler.getInstance().resetClientConnection();
-	}
-	
+
+
 	public void load_scene(String scene) {
 		FXMLLoader Loader = new FXMLLoader();
 		Loader.setLocation(getClass().getResource("../FXMLfiles/"+scene+".fxml"));
@@ -194,9 +256,9 @@ public class ResearcherActionController {
 		stage.setScene(new Scene(p));
 		stage.show();
 	}
-	
+
 	public void closeWindow(Button b) {
-	    Stage stage = (Stage) b.getScene().getWindow();
-	    stage.close();
+		Stage stage = (Stage) b.getScene().getWindow();
+		stage.close();
 	}
 }

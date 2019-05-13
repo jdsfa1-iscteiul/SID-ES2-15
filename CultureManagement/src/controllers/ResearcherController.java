@@ -86,8 +86,10 @@ public class ResearcherController {
 	}
 
 	public void handleSeeOrEditButton() {
-		if(measurementsList.getSelectionModel().getSelectedItem() != null)
+		if(measurementsList.getSelectionModel().getSelectedItem() != null) {
+			ClientConnectionHandler.getInstance().setSelectedMeasurement(measurementsList.getSelectionModel().getSelectedItem());
 			load_scene("(researcher)seeOrEditMenu");
+		}
 	}
 
 	public void handleFilterButton() {

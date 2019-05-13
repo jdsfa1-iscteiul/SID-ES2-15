@@ -12,9 +12,9 @@ public class Administrator extends DatabaseUser {
 	
 	List<Researcher> researcherList = new ArrayList<Researcher>();
 	
-	List<Culture> cultureList = new ArrayList<Culture>();
-	
-	List<Variable> variableList = new ArrayList<Variable>();
+//	List<Culture> cultureList = new ArrayList<Culture>();
+//	
+//	List<Variable> variableList = new ArrayList<Variable>();
 
 	public Administrator(String username) {
 		super(username);
@@ -33,21 +33,21 @@ public class Administrator extends DatabaseUser {
 		this.researcherList = researcherList;
 	}
 
-	public List<Culture> getCultureList() {
-		return cultureList;
-	}
-
-	public void setCultureList(List<Culture> cultureList) {
-		this.cultureList = cultureList;
-	}
-
-	public List<Variable> getVariableList() {
-		return variableList;
-	}
-
-	public void setVariableList(List<Variable> variableList) {
-		this.variableList = variableList;
-	}
+//	public List<Culture> getCultureList() {
+//		return cultureList;
+//	}
+//
+//	public void setCultureList(List<Culture> cultureList) {
+//		this.cultureList = cultureList;
+//	}
+//
+//	public List<Variable> getVariableList() {
+//		return variableList;
+//	}
+//
+//	public void setVariableList(List<Variable> variableList) {
+//		this.variableList = variableList;
+//	}
 
 	private void initializeResearcherList() throws SQLException {
 		ClientConnectionHandler.getInstance().prepareStatement("SELECT * FROM researcher");

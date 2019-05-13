@@ -25,7 +25,6 @@
                   <Image url="file:../CultureManagement/src/images/ISCTEIULNormasLogos-02.png" />
                </image>
             </ImageView>
-            <Button fx:id="logoutButton" layoutX="106.0" layoutY="601.0" mnemonicParsing="false" onAction="#handleLogoutButton" text="Logout" />
             <Button fx:id="cancelButton" layoutX="68.0" layoutY="505.0" mnemonicParsing="false" onAction="#handleCancelButton" prefHeight="39.0" prefWidth="129.0" text="Cancelar">
                <font>
                   <Font size="18.0" />
