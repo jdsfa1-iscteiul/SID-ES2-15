@@ -37,7 +37,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button fx:id="filterButton" layoutX="102.0" layoutY="539.0" mnemonicParsing="false" onAction="#handleFilterButton" text="Filtar" />
+            <Button fx:id="filterButton" layoutX="102.0" layoutY="539.0" mnemonicParsing="false" onAction="#handleFilterButton" text="Filtrar" />
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="680.0" prefWidth="986.0">
          <children>
