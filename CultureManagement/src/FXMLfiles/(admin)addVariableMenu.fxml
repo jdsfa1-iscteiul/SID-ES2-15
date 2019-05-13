@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane dividerPositions="0.26979166666666665" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="664.0" prefWidth="962.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminController">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="687.0" prefWidth="363.0">
+         <children>
+            <ImageView fitHeight="873.0" fitWidth="466.0" layoutX="-42.0" layoutY="-29.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:../CultureManagement/src/images/backgrounf.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="158.0" fitWidth="250.0" layoutX="6.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:../CultureManagement/src/images/ISCTEIULNormasLogos-02.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="logoutButton" layoutX="97.0" layoutY="620.0" mnemonicParsing="false" onAction="#handleLogoutButton" text="Logout" />
+            <Button fx:id="addResearcherButton" layoutX="36.0" layoutY="216.0" mnemonicParsing="false" onAction="#handleAddResearcherButton" prefHeight="30.0" prefWidth="169.0" text="Adicionar Investigador" />
+            <Button fx:id="addVariableButton" layoutX="37.0" layoutY="382.0" mnemonicParsing="false" onAction="#handleAddVariableButton" prefHeight="27.0" prefWidth="169.0" text="Adicionar Variável" />
+            <Button fx:id="manageResearchersButton" layoutX="37.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleManageResearchersButton" prefHeight="19.0" prefWidth="169.0" text="Gerir Investigadores" />
+            <Button fx:id="associateVariableButton" layoutX="38.0" layoutY="460.0" mnemonicParsing="false" onAction="#handleAssociateVariableButton" prefHeight="27.0" prefWidth="171.0" text="Associar Variáveis" />
+            <Label layoutX="43.0" layoutY="172.0" text="Escolha uma opção:" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="addCultureButton" layoutX="37.0" layoutY="302.0" mnemonicParsing="false" onAction="#handleAddCultureButton" prefHeight="25.0" prefWidth="169.0" text="Adicionar Cultura" />
+            <Button fx:id="manageCulturesButton" layoutX="37.0" layoutY="343.0" mnemonicParsing="false" onAction="#handleManageCulturesButton" prefHeight="25.0" prefWidth="169.0" text="Gerir Culturas" />
+            <Button fx:id="manageVariablesButton" layoutX="37.0" layoutY="421.0" mnemonicParsing="false" onAction="#handleManageVariablesButton" prefHeight="27.0" prefWidth="169.0" text="Gerir Variáveis" />
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="688.0" prefWidth="964.0">
+         <children>
+            <TextField fx:id="variableNameBox" layoutX="124.0" layoutY="215.0" promptText="Nome" />
+            <TextField fx:id="upperLimitBox" layoutX="451.0" layoutY="215.0" prefHeight="27.0" prefWidth="65.0" />
+            <TextField fx:id="lowerLimitBox" layoutX="450.0" layoutY="290.0" prefHeight="27.0" prefWidth="65.0" />
+            <Label layoutX="131.0" layoutY="184.0" text="Nome:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="434.0" layoutY="186.0" text="Limite superior:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="432.0" layoutY="265.0" text="Limite Inferior:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="addVariableButton" layoutX="303.0" layoutY="336.0" mnemonicParsing="false" onAction="#handleAddVariableButton" text="Adicionar">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="-5.0" layoutY="-19.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:../CultureManagement/src/images/bulb_icon-icons.com_74600.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="117.0" fitWidth="108.0" layoutX="566.0" layoutY="545.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:../CultureManagement/src/images/temperature-186-532268.png" />
+               </image>
+            </ImageView>
+         </children></AnchorPane>
+  </items>
+</SplitPane>

@@ -22,43 +22,78 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 //import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import utilities.Culture;
 import utilities.Measurement;
 
-public class MainController {
+public class ResearcherController {
 	
-	@FXML
-	private CheckBox lightCheckbox;
-	@FXML
-	private CheckBox temperatureCheckbox ;
-	
-	@FXML
-	private ObservableSet<CheckBox> selectedCheckBoxes = FXCollections.observableSet();
-//	private ObservableSet<CheckBox> unselectedCheckBoxes = FXCollections.observableSet();
-//	private IntegerBinding numCheckBoxesSelected = Bindings.size(selectedCheckBoxes);
-
+	//Listas
 	@FXML
 	private ObservableList<Culture> listC = FXCollections.observableArrayList();
 	@FXML
 	private ListView<Culture> culturesList;
+	
 	@FXML
 	private ObservableList<Measurement> listM = FXCollections.observableArrayList();
 	@FXML
 	private ListView<Measurement> measurementsList;
-
+	
 	@FXML
-	private Button addButton ;
+	private ObservableList<Measurement> listL = FXCollections.observableArrayList();
+	@FXML
+	private ListView<Measurement> lightList;
+	
+	@FXML
+	private ObservableList<Measurement> listT = FXCollections.observableArrayList();
+	@FXML
+	private ListView<Measurement> temperatureList;
+	
+	
+	//Buttons
+	@FXML
+	private Button associateVariableButton ;
 	@FXML 
-	private Button editButton;
+	private Button addMeasurementButton;
 	@FXML 
-	private Button logoutButton;
+	private Button seeOrEditButton;
 	@FXML
 	private Button filterButton ;
 	@FXML
-	private Button seeButton;
+	private Button logoutButton;
+	
+	//TextBoxs
+	@FXML
+	private TextField initialDateBox;
+	@FXML
+	private TextField finalDateBox;
+	
+	//handleButtons
+	
+	public void handleAssociateVariableButton() {
+		load_scene("(researcher)associateVariable");
+	}
+	
+	public void handleAddMeasurementButton() {
+		load_scene("(researcher)addMeasurement");
+	}
+	
+	public void handleSeeOrEditButton() {
+		load_scene("(researcher)seeOrEditMenu");
+	}
+	
+	public void handleFilterButton() {}
+	
+	public void handleLogoutButton() {
+		load_scene("login");
+		closeWindow();
+		ClientConnectionHandler.getInstance().resetClientConnection();
+	}
+	
+	/*---*/
 	
 	private Connection conn = null;
 	
@@ -79,24 +114,6 @@ public class MainController {
 		measurementsList.setItems(listM);
 	}
 
-	public void handleAddButton() {
-		load_add_measurement_scene();
-	}
-	
-	public void handleEditButton() {}
-	
-	public void handleLogoutButton() {
-		load_login_menu();
-		closeWindow();
-		ClientConnectionHandler.getInstance().resetClientConnection();
-	}
-	
-	public void handleSeeButton() {}
-	
-	public void handleFilterButton() {}
-	
-	
-	
 	public void getCulturesFromDB() {
 		try {
 			ClientConnectionHandler.getInstance().prepareStatement("Call show_cultures");
@@ -153,48 +170,17 @@ public class MainController {
 		}
 	}
 	
-	public void load_add_measurement_scene() {
+	public void load_scene(String scene) {
 		FXMLLoader Loader = new FXMLLoader();
-		Loader.setLocation(getClass().getResource("../FXMLFiles/addMeasurement.fxml"));
+		Loader.setLocation(getClass().getResource("../FXMLfiles/"+scene+".fxml"));
 		try {
 			Loader.load();
 		} catch (IOException e) {
-			Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(ResearcherController.class.getName()).log(Level.SEVERE, null, e);
 		}
 		Parent p = Loader.getRoot();
 		Stage stage = new Stage();
 		stage.setScene(new Scene(p));
-		stage.setTitle("Adicionar Medição");
-		stage.show();
-	}
-	
-	public void load_admin_menu() {
-		FXMLLoader Loader = new FXMLLoader();
-		Loader.setLocation(getClass().getResource("../FXMLFiles/adminMenu.fxml"));
-		try {
-			Loader.load();
-		} catch (IOException e) {
-			Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
-		}
-		Parent p = Loader.getRoot();
-		Stage stage = new Stage();
-		stage.setScene(new Scene(p));
-		stage.setTitle("Admin menu");
-		stage.show();
-	}
-	
-	public void load_login_menu() {
-		FXMLLoader Loader = new FXMLLoader();
-		Loader.setLocation(getClass().getResource("../FXMLFiles/login.fxml"));
-		try {
-			Loader.load();
-		} catch (IOException e) {
-			Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
-		}
-		Parent p = Loader.getRoot();
-		Stage stage = new Stage();
-		stage.setScene(new Scene(p));
-		stage.setTitle("Login");
 		stage.show();
 	}
 	

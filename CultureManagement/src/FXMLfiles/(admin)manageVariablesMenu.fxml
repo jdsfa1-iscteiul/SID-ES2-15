@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane dividerPositions="0.26979166666666665" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="664.0" prefWidth="962.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminController">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="687.0" prefWidth="363.0">
+         <children>
+            <ImageView fitHeight="873.0" fitWidth="466.0" layoutX="-42.0" layoutY="-29.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:../CultureManagement/src/images/backgrounf.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="158.0" fitWidth="250.0" layoutX="6.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:../CultureManagement/src/images/Images/ISCTEIULNormasLogos-02.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="logoutButton" layoutX="97.0" layoutY="620.0" mnemonicParsing="false" onAction="#handleLogoutButton" text="Logout" />
+            <Button fx:id="addResearcherButton" layoutX="36.0" layoutY="216.0" mnemonicParsing="false" onAction="#handleAddResearcherButton" prefHeight="30.0" prefWidth="169.0" text="Adicionar Investigador" />
+            <Button fx:id="addVariableButton" layoutX="37.0" layoutY="382.0" mnemonicParsing="false" onAction="#handleAddVariableButton" prefHeight="27.0" prefWidth="169.0" text="Adicionar Variável" />
+            <Button fx:id="manageResearchersButton" layoutX="37.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleManageResearchersButton" prefHeight="19.0" prefWidth="169.0" text="Gerir Investigadores" />
+            <Button fx:id="associateVariableButton" layoutX="38.0" layoutY="460.0" mnemonicParsing="false" onAction="#handleAssociateVariableButton" prefHeight="27.0" prefWidth="171.0" text="Associar Variáveis" />
+            <Label layoutX="43.0" layoutY="172.0" text="Escolha uma opção:" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="addCultureButton" layoutX="37.0" layoutY="302.0" mnemonicParsing="false" onAction="#handleAddCultureButton" prefHeight="25.0" prefWidth="169.0" text="Adicionar Cultura" />
+            <Button fx:id="manageCulturesButton" layoutX="37.0" layoutY="343.0" mnemonicParsing="false" onAction="#handleManageCulturesButton" prefHeight="25.0" prefWidth="169.0" text="Gerir Culturas" />
+            <Button fx:id="manageVariablesButton" layoutX="37.0" layoutY="421.0" mnemonicParsing="false" onAction="#handleManageVariablesButton" prefHeight="27.0" prefWidth="169.0" text="Gerir Variáveis" />
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="688.0" prefWidth="964.0">
+         <children>
+            <ListView fx:id="variablesList" layoutX="45.0" layoutY="146.0" prefHeight="484.0" prefWidth="200.0" />
+            <Separator layoutX="305.0" layoutY="140.0" orientation="VERTICAL" prefHeight="487.0" prefWidth="0.0" />
+            <Button fx:id="removeVariableButton" layoutX="444.0" layoutY="389.0" mnemonicParsing="false" onAction="#handleRemoveVariableButton" text="Remover">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="editVariableButton" layoutX="443.0" layoutY="296.0" mnemonicParsing="false" onAction="#handleEditVariableButton" prefHeight="35.0" prefWidth="100.0" text="Editar">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Label layoutX="52.0" layoutY="120.0" text="Variáveis:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+  </items>
+</SplitPane>
