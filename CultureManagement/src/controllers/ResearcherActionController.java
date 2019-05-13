@@ -34,9 +34,14 @@ public class ResearcherActionController {
 	private Button saveButton;
 	@FXML
 	private Button exitButton;
-	public void handleSaveButton() {};
 	
-	public void handleExitButton() {};
+	public void handleSaveButton() {
+		
+	}
+	
+	public void handleExitButton() {
+		
+	}
 	
 	
 	//Menu adicionar medicao 
@@ -99,12 +104,4 @@ public class ResearcherActionController {
 	    Stage stage = (Stage) b.getScene().getWindow();
 	    stage.close();
 	}
-	
-	
-	
-	
-	
-	
-	
-
 }

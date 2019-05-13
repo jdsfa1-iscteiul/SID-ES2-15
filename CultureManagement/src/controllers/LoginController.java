@@ -35,17 +35,17 @@ public class LoginController {
 	 * Deve verificar se os dados de login estao corretos
 	 */
 	public void handleLoginButton() {
-		/*try {
+		try {
 			String username = usernameBox.getText();
 			String password = passwordBox.getText();
 			Connection connection = DriverManager.getConnection("jdbc:mariadb://"+host+dbName+"?user="
 																			+username+"&password="+password);
 			ClientConnectionHandler.getInstance().setDbConnection(connection, username);
 			
-			if(ClientConnectionHandler.getInstance().getUser() instanceof Researcher)
-				load_scene("(admin)initialMenu");
-			else
+			if(ClientConnectionHandler.getInstance().getUser() instanceof Researcher) 
 				load_scene("(researcher)initialMenu");
+			else
+				load_scene("(admin)initialMenu");
 			
 			closeWindow();
 		} catch(SQLException e) {
@@ -53,10 +53,7 @@ public class LoginController {
 			errorAlert.setHeaderText("Impossível conectar à base de dados");
 			errorAlert.setContentText("O username ou a password estão incorrectos");
 			errorAlert.showAndWait();
-		}	*/
-		load_scene("(researcher)initialMenu");
-		closeWindow();
-//		load_scene("(admin)initialMenu");
+		}	
 	}
 	
 	public void load_scene(String scene) {
