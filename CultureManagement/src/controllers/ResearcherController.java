@@ -86,7 +86,8 @@ public class ResearcherController {
 	}
 
 	public void handleSeeOrEditButton() {
-		load_scene("(researcher)seeOrEditMenu");
+		if(measurementsList.getSelectionModel().getSelectedItem() != null)
+			load_scene("(researcher)seeOrEditMenu");
 	}
 
 	public void handleFilterButton() {

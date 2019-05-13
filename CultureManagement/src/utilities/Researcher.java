@@ -20,12 +20,15 @@ public class Researcher extends DatabaseUser{
 	
 	private List<Culture> cultureList = new ArrayList<>();
 	
+	private List<VariableBoundaries> variableBoundariesList = new ArrayList<>();
+	
 	public Researcher(String username) {
 		super(username);
 		try {
 			initializeVariables();
 			initializeMeasurementsData();
 			initializeCultureList();
+			initializeVariableBoundariesList();
 		} catch (SQLException e) {
 		}		
 	}
@@ -38,6 +41,14 @@ public class Researcher extends DatabaseUser{
 			cultureList.add(new Culture(results));
 	}
 
+	private void initializeVariableBoundariesList() throws SQLException {
+		ClientConnectionHandler.getInstance().prepareStatement("CALL get_researcher_variable_boundaries()");
+		ClientConnectionHandler.getInstance().executeStatement();
+		ResultSet results = ClientConnectionHandler.getInstance().getQueryResults();
+		while(results.next()) 
+			variableBoundariesList.add(new VariableBoundaries(results));
+	}
+	
 	private void initializeMeasurementsData() throws SQLException {
 		ClientConnectionHandler.getInstance().prepareStatement("CALL load_researcher_data()");
 		ClientConnectionHandler.getInstance().executeStatement();
@@ -73,7 +84,6 @@ public class Researcher extends DatabaseUser{
 		this.employeeId = employeeId;
 		this.name = name;
 		this.email = email;
-	//	this.username = username;
 		this.title = title;
 	}
 	
@@ -124,6 +134,10 @@ public class Researcher extends DatabaseUser{
 	public void addCultureToList(Culture culture) {
 		if(!cultureList.contains(culture))
 			cultureList.add(culture);
+	}
+	
+	public List<VariableBoundaries> getVariableBoundariesList() {
+		return variableBoundariesList;
 	}
 
 	@Override

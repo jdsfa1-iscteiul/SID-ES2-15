@@ -5,12 +5,13 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.26979166666666665" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="664.0" prefWidth="962.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ResearcherActionController">
+<SplitPane dividerPositions="0.26979166666666665" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="664.0" prefWidth="962.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.ResearcherActionController">
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="687.0" prefWidth="363.0">
          <children>
@@ -25,7 +26,7 @@
                </image>
             </ImageView>
             <Button fx:id="logoutButton" layoutX="106.0" layoutY="601.0" mnemonicParsing="false" onAction="#handleLogoutButton" text="Logout" />
-            <Button fx:id="cancelButton" layoutX="68.0" layoutY="428.0" mnemonicParsing="false" onAction="#handleCancelButton" prefHeight="39.0" prefWidth="129.0" text="Cancelar">
+            <Button fx:id="cancelButton" layoutX="68.0" layoutY="505.0" mnemonicParsing="false" onAction="#handleCancelButton" prefHeight="39.0" prefWidth="129.0" text="Cancelar">
                <font>
                   <Font size="18.0" />
                </font></Button>
@@ -34,11 +35,15 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="disassociateButton" layoutX="68.0" layoutY="331.0" mnemonicParsing="false" onAction="#handleDisassociateButton" prefHeight="35.0" prefWidth="129.0" text="Desassociar">
+            <Button fx:id="disassociateButton" layoutX="69.0" layoutY="408.0" mnemonicParsing="false" onAction="#handleDisassociateButton" prefHeight="35.0" prefWidth="129.0" text="Desassociar">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
+            <TextField fx:id="variableLowerBound" layoutX="116.0" layoutY="282.0" prefHeight="25.0" prefWidth="81.0" />
+            <TextField fx:id="variableUpperBound" layoutX="116.0" layoutY="319.0" prefHeight="25.0" prefWidth="81.0" />
+            <Label layoutX="61.0" layoutY="286.0" prefHeight="17.0" prefWidth="45.0" text="Mínimo" textAlignment="CENTER" textFill="WHITE" />
+            <Label layoutX="60.0" layoutY="323.0" prefHeight="17.0" prefWidth="45.0" text="Máximo" textAlignment="CENTER" textFill="WHITE" />
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="688.0" prefWidth="964.0">
          <children>

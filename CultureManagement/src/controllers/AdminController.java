@@ -12,6 +12,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -117,7 +119,10 @@ public class AdminController {
 			ClientConnectionHandler.getInstance().prepareStatement(sqlCommand);
 			ClientConnectionHandler.getInstance().executeStatement();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Alert errorAlert = new Alert(AlertType.ERROR);
+			errorAlert.setHeaderText("Impossível criar investigador");
+			errorAlert.setContentText("Dados duplicados ou incorretos");
+			errorAlert.showAndWait();
 		}		
 	}
 	
