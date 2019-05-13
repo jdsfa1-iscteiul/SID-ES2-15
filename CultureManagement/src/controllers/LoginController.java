@@ -55,6 +55,7 @@ public class LoginController {
 			errorAlert.showAndWait();
 		}	*/
 		//load_scene("(researcher)initialMenu");
+		closeWindow();
 		load_scene("(admin)initialMenu");
 	}
 	

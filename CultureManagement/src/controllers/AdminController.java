@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -36,31 +37,38 @@ public class AdminController {
 	
 	
 	public void handleAddResearcherButton() {
+		closeWindow(logoutButton);
 		load_scene("(admin)addResearcherMenu");
 	}
 	
 	public void handleManageResearchersButton() {
+		closeWindow(logoutButton);
 		load_scene("(admin)manageResearcherMenu");
 	}
 	
 	public void handleAddCultureButton() {
+		closeWindow(logoutButton);
 		load_scene("(admin)addCultureMenu");
 	}
 	
 	public void handleManageCulturesButton() {
+		closeWindow(logoutButton);
 		load_scene("(admin)manageCulturesMenu");
 	}
 	
 	public void handleAddVariableButton() {
+		closeWindow(logoutButton);
 		load_scene("(admin)addVariableMenu");
 	}
 	
 	public void handleManageVariablesButton() {
+		closeWindow(logoutButton);
 		load_scene("(admin)manageVariablesMenu");
 	}
 	
 	public void handleAssociateVariableButton() {
-		load_scene("(admin)associateVariable");
+		closeWindow(logoutButton);
+		load_scene("(admin)associateVariablesMenu");
 	}
 	
 	public void handleLogoutButton() {
@@ -87,32 +95,96 @@ public class AdminController {
 	private TextField titleIdUserBox;
 	
 	public void handleAddThisResearcherButton() {
-		load_scene("(admin)assResearcherButton");
+		
 	}
 	
 	/* Gerir Investigadores */
+	@FXML
+	private ListView researchersList;
+	@FXML
+	private Button removeResearcherButton;
+	@FXML
+	private Button editResearcherButton;
 	
 	
+	public void handleRemoveResearcherButton() {
+
+	}
 	
+	public void handleEditResearcherButton() {
+
+	}
 	
 	/* Adicionar Cultura */
 	
+	@FXML
+	private Button addThisCultureButton;
 	
+	public void handleAddThisCultureButton() {
+
+	}
 	
-	/* Gerir culturas Cultura */
+	/* Gerir Cultura */
+	@FXML
+	private ListView culturesList;
+	@FXML
+	private Button editCultureButton;
+	@FXML
+	private Button removeCultureButton;
+	@FXML
+	private Button associateCultureButton;
 	
-	
+	public void handleEditCultureButton() {
+
+	}
+	public void handleRemoveCultureButton() {
+
+	}
+	public void handleAssociateCultureButton() {
+
+	}
 	
 	/*Adicionar Variável*/
-	
+	@FXML
+	private TextField variableNameBox;
+	@FXML
+	private TextField upperLimitBox;
+	@FXML
+	private TextField lowerLimitBox;
 	
 	
 	/* Gerir variáveis */
+	@FXML
+	private ListView variablesList;
+	@FXML
+	private Button removeVariableButton;
+	@FXML
+	private Button editVariableButton;
 	
 	
+	public void handleRemoveVariableButton() {
+
+	}
+	
+	public void handleEditVariableButton() {
+
+	}
 	/*Associar variaveis */
+	@FXML
+	private Button associateButton;
+	@FXML
+	private Button desassociateButton;
+	@FXML
+	private ListView culturesAssociateList;
+	@FXML
+	private ListView variablesAssociateList;
 	
-	
+	public void handleAssociateButton() {
+
+	}
+	public void handleDesassociateButton() {
+
+	}
 	
 	/*Funcoes globais da classe*/
 	
