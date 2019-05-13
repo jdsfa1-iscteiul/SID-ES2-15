@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import database.mysql.ClientConnectionHandler;
 import database.mysql.DatabaseUser;
 
 public class Researcher extends DatabaseUser{
@@ -21,7 +22,51 @@ public class Researcher extends DatabaseUser{
 	
 	public Researcher(String username) {
 		super(username);
+		try {
+			initializeVariables();
+			initializeMeasurementsData();
+			initializeCultureList();
+		} catch (SQLException e) {
+		}		
 	}
+	
+	private void initializeCultureList() throws SQLException {
+		ClientConnectionHandler.getInstance().prepareStatement("CALL show_cultures()");
+		ClientConnectionHandler.getInstance().executeStatement();
+		ResultSet results = ClientConnectionHandler.getInstance().getQueryResults();
+		while(results.next()) 
+			cultureList.add(new Culture(results));
+	}
+
+	private void initializeMeasurementsData() throws SQLException {
+		ClientConnectionHandler.getInstance().prepareStatement("CALL load_researcher_data()");
+		ClientConnectionHandler.getInstance().executeStatement();
+		ResultSet results = ClientConnectionHandler.getInstance().getQueryResults();
+		while(results.next()) {
+			VariableBoundaries vb = new VariableBoundaries(results);
+			Measurement measurement = new Measurement(results);
+			if(!measurementsData.containsKey(vb) || measurementsData.get(vb) == null) {
+				List<Measurement> list = new ArrayList<>();
+				list.add(measurement);
+				measurementsData.put(vb, list);
+			}
+			else {
+				measurementsData.get(vb).add(measurement);
+			}
+		}	
+	}
+	
+	private void initializeVariables() throws SQLException {
+		ClientConnectionHandler.getInstance().prepareStatement("CALL get_researcher_bio()");
+		ClientConnectionHandler.getInstance().executeStatement();
+		ResultSet results = ClientConnectionHandler.getInstance().getQueryResults();
+		results.next();
+		employeeId = results.getInt("employee_id");
+		name = results.getString("name");
+		email = results.getString("email");
+		title = results.getString("title");	
+	}
+
 
 	public Researcher(int employeeId, String name, String email, String username, String title) {
 		super(username);
@@ -34,11 +79,18 @@ public class Researcher extends DatabaseUser{
 	
 	public Researcher(ResultSet object) throws SQLException {
 		super(object.getString("username_db"));
-		employeeId = object.getInt("measurement_id");
+		employeeId = object.getInt("employee_id");
 		name = object.getString("name");
 		email = object.getString("email");
-		//username = object.getString("username_db");
-		title = object.getString("culture_description");
+		title = object.getString("title");
+	}
+	
+	public Map<VariableBoundaries, List<Measurement>> getMeasurementsData() {
+		return measurementsData;
+	}
+	
+	public List<Culture> getCultureList() {
+		return cultureList;
 	}
 
 	public String getName() {
@@ -69,10 +121,6 @@ public class Researcher extends DatabaseUser{
 		return employeeId;
 	}
 
-//	public String getUsername() {
-//		return username;
-//	}
-	
 	public void addCultureToList(Culture culture) {
 		if(!cultureList.contains(culture))
 			cultureList.add(culture);
