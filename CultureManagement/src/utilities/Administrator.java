@@ -19,8 +19,6 @@ public class Administrator extends DatabaseUser {
 	public Administrator(String username) {
 		super(username);
 		try {
-			initializeCultureList();
-			initializeVariableList();
 			initializeResearcherList();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -60,21 +58,6 @@ public class Administrator extends DatabaseUser {
 		
 	}
 
-	private void initializeCultureList() throws SQLException {
-		ClientConnectionHandler.getInstance().prepareStatement("SELECT * FROM culture");
-		ClientConnectionHandler.getInstance().executeStatement();
-		ResultSet results = ClientConnectionHandler.getInstance().getQueryResults();
-		while(results.next()) 
-			cultureList.add(new Culture(results));
-	}
-
-	private void initializeVariableList() throws SQLException {
-		ClientConnectionHandler.getInstance().prepareStatement("SELECT * FROM variable");
-		ClientConnectionHandler.getInstance().executeStatement();
-		ResultSet results = ClientConnectionHandler.getInstance().getQueryResults();
-		while(results.next())
-			variableList.add(new Variable(results));
-	}
 	
 	@Override
 	public String getUserType() {
