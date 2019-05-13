@@ -43,9 +43,9 @@ public class LoginController {
 			ClientConnectionHandler.getInstance().setDbConnection(connection, username);
 			
 			if(ClientConnectionHandler.getInstance().getUser() instanceof Researcher)
-				load_scene("(admin)inicialMenu");
+				load_scene("(admin)initialMenu");
 			else
-				load_scene("(researcher)inicialMenu");
+				load_scene("(researcher)initialMenu");
 			
 			closeWindow();
 		} catch(SQLException e) {
@@ -54,8 +54,8 @@ public class LoginController {
 			errorAlert.setContentText("O username ou a password estão incorrectos");
 			errorAlert.showAndWait();
 		}	*/
-		load_scene("(researcher)inicialMenu");
-		//load_scene("(admin)addVariableMenu");
+		//load_scene("(researcher)initialMenu");
+		load_scene("(admin)initialMenu");
 	}
 	
 	public void load_scene(String scene) {

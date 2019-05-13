@@ -4,19 +4,23 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import database.mysql.ClientConnectionHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class AdminController {
 	
+	/*Barra lateral*/
+	
 	@FXML
 	private Button addResearcherButton;
 	@FXML
-	private Button manageResearcherButton;
+	private Button manageResearchersButton;
 	@FXML
 	private Button addCultureButton;
 	@FXML
@@ -26,7 +30,7 @@ public class AdminController {
 	@FXML
 	private Button manageVariablesButton;
 	@FXML
-	private Button associateVariablesButton;
+	private Button associateVariableButton;
 	@FXML
 	private Button logoutButton;
 	
@@ -35,7 +39,7 @@ public class AdminController {
 		load_scene("(admin)addResearcherMenu");
 	}
 	
-	public void handleManageResearcherButton() {
+	public void handleManageResearchersButton() {
 		load_scene("(admin)manageResearcherMenu");
 	}
 	
@@ -55,14 +59,62 @@ public class AdminController {
 		load_scene("(admin)manageVariablesMenu");
 	}
 	
-	public void handleAssociateVariablesButton() {
+	public void handleAssociateVariableButton() {
 		load_scene("(admin)associateVariable");
 	}
 	
 	public void handleLogoutButton() {
 		load_scene("login");
+		closeWindow(logoutButton);
+		ClientConnectionHandler.getInstance().resetClientConnection();
 	}
 	
+	/* Adicionar Investigador */
+	
+	@FXML
+	private Button addThisResearcherButton;
+	@FXML
+	private TextField nameUserBox;
+	@FXML
+	private TextField usernameUserBox;
+	@FXML
+	private TextField emailUserBox;
+	@FXML
+	private TextField passwordUserBox;
+	@FXML
+	private TextField confirmPasswordUserBox;
+	@FXML
+	private TextField titleIdUserBox;
+	
+	public void handleAddThisResearcherButton() {
+		load_scene("(admin)assResearcherButton");
+	}
+	
+	/* Gerir Investigadores */
+	
+	
+	
+	
+	/* Adicionar Cultura */
+	
+	
+	
+	/* Gerir culturas Cultura */
+	
+	
+	
+	/*Adicionar Variável*/
+	
+	
+	
+	/* Gerir variáveis */
+	
+	
+	/*Associar variaveis */
+	
+	
+	
+	/*Funcoes globais da classe*/
 	
 	public void load_scene(String scene) {
 		FXMLLoader Loader = new FXMLLoader();
