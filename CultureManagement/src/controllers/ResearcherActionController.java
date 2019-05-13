@@ -30,7 +30,10 @@ public class ResearcherActionController {
 	private TextField actionDateBox;
 	@FXML
 	private TextField actionValueBox;
-	
+	@FXML
+	private Button saveButton;
+	@FXML
+	private Button exitButton;
 	public void handleSaveButton() {};
 	
 	public void handleExitButton() {};
@@ -57,10 +60,11 @@ public class ResearcherActionController {
 	private Button logoutButton;
 	@FXML
 	private Button associateButton;
+	@FXML
+	private ListView<Culture> culturesAssociateList;
 	
-	ListView<Culture> culturesAssociateList;
-	
-	ListView<Variable> variablesAssociateList;
+	@FXML
+	private ListView<Variable> variablesAssociateList;
 	
 	public void handleAssociateButton() {
 		closeWindow(associateButton);
@@ -69,6 +73,7 @@ public class ResearcherActionController {
 	public void handleCancelButton() {
 		closeWindow(cancelButton);
 	}
+	
 	
 	public void handleLogoutButton() {
 		load_scene("login");

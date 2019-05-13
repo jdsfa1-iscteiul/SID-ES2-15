@@ -15,9 +15,9 @@
                   <Label layoutX="32.0" layoutY="89.0" text="Data:" />
                   <Label layoutX="32.0" layoutY="121.0" text="Valor:" />
                   <TextField fx:id="actionCultureBox" layoutX="151.0" layoutY="19.0" prefHeight="27.0" prefWidth="108.0" />
-                  <TextField fx:id="variableActionBox" layoutX="151.0" layoutY="52.0" prefHeight="27.0" prefWidth="108.0" />
-                  <TextField fx:id="dateActionBox" layoutX="151.0" layoutY="84.0" prefHeight="27.0" prefWidth="108.0" />
-                  <TextField fx:id="valueActionBox" layoutX="151.0" layoutY="116.0" prefHeight="27.0" prefWidth="108.0" />
+                  <TextField fx:id="actionVariableBox" layoutX="151.0" layoutY="52.0" prefHeight="27.0" prefWidth="108.0" />
+                  <TextField fx:id="actionDateBox" layoutX="151.0" layoutY="84.0" prefHeight="27.0" prefWidth="108.0" />
+                  <TextField fx:id="actionValueBox" layoutX="151.0" layoutY="116.0" prefHeight="27.0" prefWidth="108.0" />
                   <Button fx:id="saveButton" layoutX="100.0" layoutY="170.0" mnemonicParsing="false" onAction="#handleSaveButton" text="Guardar" />
                   <Button fx:id="exitButton" layoutX="98.0" layoutY="213.0" mnemonicParsing="false" onAction="#handleExitButton" prefHeight="27.0" prefWidth="72.0" text="Sair" />
                </children>

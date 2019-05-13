@@ -54,9 +54,9 @@ public class LoginController {
 			errorAlert.setContentText("O username ou a password estão incorrectos");
 			errorAlert.showAndWait();
 		}	*/
-		//load_scene("(researcher)initialMenu");
+		load_scene("(researcher)initialMenu");
 		closeWindow();
-		load_scene("(admin)initialMenu");
+//		load_scene("(admin)initialMenu");
 	}
 	
 	public void load_scene(String scene) {

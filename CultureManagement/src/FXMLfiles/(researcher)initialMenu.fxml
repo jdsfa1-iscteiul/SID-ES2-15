@@ -30,7 +30,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="inicialDateBox" alignment="TOP_CENTER" layoutX="45.0" layoutY="442.0" promptText="dd/mm/aaaa" />
+            <TextField fx:id="initialDateBox" alignment="TOP_CENTER" layoutX="45.0" layoutY="442.0" promptText="dd/mm/aaaa" />
             <TextField fx:id="finalDateBox" alignment="TOP_CENTER" layoutX="44.0" layoutY="504.0" promptText="dd/mm/aaaa" />
             <Label layoutX="111.0" layoutY="474.0" text="até" textFill="#f2f2f2">
                <font>
