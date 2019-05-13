@@ -1,10 +1,13 @@
 package controllers;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import database.mysql.ClientConnectionHandler;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,6 +16,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import utilities.Administrator;
+import utilities.Culture;
+import utilities.Researcher;
+import utilities.Variable;
 
 public class AdminController {
 	
@@ -37,38 +44,43 @@ public class AdminController {
 	
 	
 	public void handleAddResearcherButton() {
-		closeWindow(logoutButton);
 		load_scene("(admin)addResearcherMenu");
+		closeWindow(logoutButton);
 	}
 	
 	public void handleManageResearchersButton() {
-		closeWindow(logoutButton);
 		load_scene("(admin)manageResearcherMenu");
+//		ObservableList<Researcher> observableResearcherList = FXCollections.observableArrayList();
+//		Administrator admin = (Administrator)ClientConnectionHandler.getInstance().getUser();
+//		for(Researcher researcher: admin.getResearcherList())
+//			observableResearcherList.add(researcher);
+//		researchersList.setItems(observableResearcherList);
+		closeWindow(logoutButton);
 	}
 	
 	public void handleAddCultureButton() {
-		closeWindow(logoutButton);
 		load_scene("(admin)addCultureMenu");
+		closeWindow(logoutButton);
 	}
 	
 	public void handleManageCulturesButton() {
-		closeWindow(logoutButton);
 		load_scene("(admin)manageCulturesMenu");
+		closeWindow(logoutButton);
 	}
 	
 	public void handleAddVariableButton() {
-		closeWindow(logoutButton);
 		load_scene("(admin)addVariableMenu");
+		closeWindow(logoutButton);
 	}
 	
 	public void handleManageVariablesButton() {
-		closeWindow(logoutButton);
 		load_scene("(admin)manageVariablesMenu");
+		closeWindow(logoutButton);
 	}
 	
 	public void handleAssociateVariableButton() {
-		closeWindow(logoutButton);
 		load_scene("(admin)associateVariablesMenu");
+		closeWindow(logoutButton);
 	}
 	
 	public void handleLogoutButton() {
@@ -95,12 +107,23 @@ public class AdminController {
 	private TextField titleIdUserBox;
 	
 	public void handleAddThisResearcherButton() {
-		
+		String email = emailUserBox.getText();
+		String name = nameUserBox.getText();
+		String username =usernameUserBox.getText();
+		String pass = passwordUserBox.getText();
+		String title = titleIdUserBox.getText();
+		String sqlCommand = "CALL create_researcher('"+email+"','"+pass+"','"+name+"','"+username+"','"+title+"')";
+		try {
+			ClientConnectionHandler.getInstance().prepareStatement(sqlCommand);
+			ClientConnectionHandler.getInstance().executeStatement();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
 	}
 	
 	/* Gerir Investigadores */
 	@FXML
-	private ListView researchersList;
+	private ListView<Researcher> researchersList;
 	@FXML
 	private Button removeResearcherButton;
 	@FXML
@@ -126,7 +149,7 @@ public class AdminController {
 	
 	/* Gerir Cultura */
 	@FXML
-	private ListView culturesList;
+	private ListView<Culture> culturesList;
 	@FXML
 	private Button editCultureButton;
 	@FXML
@@ -155,7 +178,7 @@ public class AdminController {
 	
 	/* Gerir variáveis */
 	@FXML
-	private ListView variablesList;
+	private ListView<Variable> variablesList;
 	@FXML
 	private Button removeVariableButton;
 	@FXML
@@ -206,8 +229,4 @@ public class AdminController {
 	    Stage stage = (Stage) b.getScene().getWindow();
 	    stage.close();
 	}
-	
-	
-	
-
 }
