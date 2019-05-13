@@ -18,7 +18,7 @@ public class Researcher extends DatabaseUser{
 	
 	private Map<VariableBoundaries, List<Measurement>> measurementsData = new HashMap<>();
 	
-	private List<Culture> cultureList = new ArrayList<>();
+	private List<Culture> researcherCultureList = new ArrayList<>();
 	
 	private List<VariableBoundaries> variableBoundariesList = new ArrayList<>();
 	
@@ -27,21 +27,23 @@ public class Researcher extends DatabaseUser{
 		try {
 			initializeVariables();
 			initializeMeasurementsData();
-			initializeCultureList();
+			initializeResearcherCultureList();
 			initializeVariableBoundariesList();
 		} catch (SQLException e) {
 		}		
 	}
 	
-	private void initializeCultureList() throws SQLException {
+	private void initializeResearcherCultureList() throws SQLException {
+		researcherCultureList.clear();
 		ClientConnectionHandler.getInstance().prepareStatement("CALL get_cultures()");
 		ClientConnectionHandler.getInstance().executeStatement();
 		ResultSet results = ClientConnectionHandler.getInstance().getQueryResults();
 		while(results.next()) 
-			cultureList.add(new Culture(results));
+			researcherCultureList.add(new Culture(results));
 	}
 
 	private void initializeVariableBoundariesList() throws SQLException {
+		variableBoundariesList.clear();
 		ClientConnectionHandler.getInstance().prepareStatement("CALL get_researcher_variable_boundaries()");
 		ClientConnectionHandler.getInstance().executeStatement();
 		ResultSet results = ClientConnectionHandler.getInstance().getQueryResults();
@@ -50,6 +52,7 @@ public class Researcher extends DatabaseUser{
 	}
 	
 	private void initializeMeasurementsData() throws SQLException {
+		measurementsData = new HashMap<VariableBoundaries, List<Measurement>>();
 		ClientConnectionHandler.getInstance().prepareStatement("CALL load_researcher_data()");
 		ClientConnectionHandler.getInstance().executeStatement();
 		ResultSet results = ClientConnectionHandler.getInstance().getQueryResults();
@@ -65,6 +68,12 @@ public class Researcher extends DatabaseUser{
 				measurementsData.get(vb).add(measurement);
 			}
 		}	
+	}
+	
+	public void updateResearcherLists() throws SQLException {
+		initializeResearcherCultureList();
+		initializeMeasurementsData();	
+		initializeVariableBoundariesList();
 	}
 	
 	private void initializeVariables() throws SQLException {
@@ -100,7 +109,7 @@ public class Researcher extends DatabaseUser{
 	}
 	
 	public List<Culture> getResearcherCultureList() {
-		return cultureList;
+		return researcherCultureList;
 	}
 
 	public String getName() {
@@ -132,8 +141,8 @@ public class Researcher extends DatabaseUser{
 	}
 
 	public void addCultureToList(Culture culture) {
-		if(!cultureList.contains(culture))
-			cultureList.add(culture);
+		if(!researcherCultureList.contains(culture))
+			researcherCultureList.add(culture);
 	}
 	
 	public List<VariableBoundaries> getVariableBoundariesList() {
@@ -144,11 +153,4 @@ public class Researcher extends DatabaseUser{
 	public String getUserType() {
 		return "Researcher";
 	}
-
-	@Override
-	public String toString() {
-		return name;
-	}
-	
-	
 }

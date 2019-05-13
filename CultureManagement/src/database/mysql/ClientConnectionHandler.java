@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import utilities.Administrator;
+import utilities.Measurement;
 import utilities.Researcher;
 
 public class ClientConnectionHandler {
@@ -21,7 +22,8 @@ public class ClientConnectionHandler {
 	//private String username;
 
 	private PreparedStatement currentStatement;
-
+	
+	private Measurement selectedMeasurement;
 	private ResultSet queryResults;
 
 	//private String accountType;
@@ -94,6 +96,14 @@ public class ClientConnectionHandler {
 
 	public void resetQueryResults() {
 		queryResults = null;
+	}
+
+	public Measurement getSelectedMeasurement() {
+		return selectedMeasurement;
+	}
+
+	public void setSelectedMeasurement(Measurement selectedMeasurement) {
+		this.selectedMeasurement = selectedMeasurement;
 	}
 
 }
