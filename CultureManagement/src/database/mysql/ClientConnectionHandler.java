@@ -15,6 +15,8 @@ public class ClientConnectionHandler {
 	private Connection dbConnection;
 	
 	private DatabaseUser user;
+	
+	private DatabaseSystem system;
 
 	//private String username;
 
@@ -46,12 +48,9 @@ public class ClientConnectionHandler {
 			queryResults.next();
 			if(queryResults.getString("current_role").contains("administrator_role")) 
 				user = new Administrator(username);
-			else
+			else 
 				user = new Researcher(username);
-//			
-//			accountType = queryResults.getString("current_role");
-//			if(accountType==null)
-//				accountType = "admin";
+			system = new DatabaseSystem();
 		}
 		catch (SQLException exception) {
 			exception.printStackTrace();
@@ -61,6 +60,10 @@ public class ClientConnectionHandler {
 	
 	public DatabaseUser getUser() {
 		return user;
+	}
+	
+	public DatabaseSystem getSystem() {
+		return system;
 	}
 
 //	public void setUsername(String username) {
@@ -78,7 +81,6 @@ public class ClientConnectionHandler {
 
 	public void prepareStatement(String sqlCommand) throws SQLException {
 		currentStatement = dbConnection.prepareStatement(sqlCommand);
-
 	}
 
 	public void executeStatement() throws SQLException {
