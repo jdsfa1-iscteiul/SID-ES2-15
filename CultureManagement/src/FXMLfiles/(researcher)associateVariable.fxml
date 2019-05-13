@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<SplitPane dividerPositions="0.26979166666666665" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="664.0" prefWidth="962.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.ResearcherActionController">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="687.0" prefWidth="363.0">
+         <children>
+            <ImageView fitHeight="873.0" fitWidth="466.0" layoutX="-42.0" layoutY="-29.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:../CultureManagement/src/images/backgrounf.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="158.0" fitWidth="250.0" layoutX="6.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:../CultureManagement/src/images/ISCTEIULNormasLogos-02.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="logoutButton" layoutX="106.0" layoutY="601.0" mnemonicParsing="false" onAction="#handleLogoutButton" text="Logout" />
+            <Button fx:id="cancelButton" layoutX="68.0" layoutY="505.0" mnemonicParsing="false" onAction="#handleCancelButton" prefHeight="39.0" prefWidth="129.0" text="Cancelar">
+               <font>
+                  <Font size="18.0" />
+               </font></Button>
+            <Button fx:id="associateButton" layoutX="68.0" layoutY="225.0" mnemonicParsing="false" onAction="#handleAssociateButton" prefHeight="35.0" prefWidth="129.0" text="Associar">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="disassociateButton" layoutX="69.0" layoutY="408.0" mnemonicParsing="false" onAction="#handleDisassociateButton" prefHeight="35.0" prefWidth="129.0" text="Desassociar">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <TextField fx:id="variableLowerBound" layoutX="116.0" layoutY="282.0" prefHeight="25.0" prefWidth="81.0" />
+            <TextField fx:id="variableUpperBound" layoutX="116.0" layoutY="319.0" prefHeight="25.0" prefWidth="81.0" />
+            <Label layoutX="61.0" layoutY="286.0" prefHeight="17.0" prefWidth="45.0" text="Mínimo" textAlignment="CENTER" textFill="WHITE" />
+            <Label layoutX="60.0" layoutY="323.0" prefHeight="17.0" prefWidth="45.0" text="Máximo" textAlignment="CENTER" textFill="WHITE" />
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="688.0" prefWidth="964.0">
+         <children>
+            <Separator layoutX="262.0" layoutY="192.0" orientation="VERTICAL" prefHeight="442.0" prefWidth="0.0" />
+            
+            <ListView fx:id="culturesAssociateList" layoutX="15.0" layoutY="179.0" onKeyReleased="#displayVariablesForSelectedCulture" onMouseClicked="#displayVariablesForSelectedCulture" onSwipeDown="#displayVariablesForSelectedCulture" onSwipeUp="#displayVariablesForSelectedCulture" prefHeight="448.0" prefWidth="230.0" />
+            <ListView fx:id="variablesAssociatedList" layoutX="298.0" layoutY="179.0" prefHeight="197.0" prefWidth="302.0" />
+            <Label layoutX="44.0" layoutY="147.0" text="Culturas:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="298.0" layoutY="147.0" text="Variáveis associadas:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ListView fx:id="variablesNotAssociatedList" layoutX="298.0" layoutY="430.0" prefHeight="197.0" prefWidth="302.0" />
+            <Label layoutX="298.0" layoutY="400.0" prefHeight="27.0" prefWidth="256.0" text="Variáveis por associar:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+  </items>
+</SplitPane>

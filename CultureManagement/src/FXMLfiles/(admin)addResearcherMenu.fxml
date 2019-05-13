@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane dividerPositions="0.26979166666666665" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="664.0" prefWidth="962.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminController">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="687.0" prefWidth="363.0">
+         <children>
+            <ImageView fitHeight="873.0" fitWidth="466.0" layoutX="-42.0" layoutY="-29.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:../CultureManagement/src/images/backgrounf.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="158.0" fitWidth="250.0" layoutX="6.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:../CultureManagement/src/images/ISCTEIULNormasLogos-02.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="logoutButton" layoutX="97.0" layoutY="620.0" mnemonicParsing="false" onAction="#handleLogoutButton" text="Logout" />
+            <Button fx:id="addResearcherButton" layoutX="36.0" layoutY="216.0" mnemonicParsing="false" onAction="#handleAddResearcherButton" prefHeight="30.0" prefWidth="169.0" text="Adicionar Investigador" />
+            <Button fx:id="addVariableButton" layoutX="37.0" layoutY="382.0" mnemonicParsing="false" onAction="#handleAddVariableButton" prefHeight="27.0" prefWidth="169.0" text="Adicionar Variável" />
+            <Button fx:id="manageResearchersButton" layoutX="37.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleManageResearchersButton" prefHeight="19.0" prefWidth="169.0" text="Gerir Investigadores" />
+            <Button fx:id="associateVariableButton" layoutX="38.0" layoutY="460.0" mnemonicParsing="false" onAction="#handleAssociateVariableButton" prefHeight="27.0" prefWidth="171.0" text="Associar Variáveis" />
+            <Label layoutX="43.0" layoutY="172.0" text="Escolha uma opção:" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="addCultureButton" layoutX="37.0" layoutY="302.0" mnemonicParsing="false" onAction="#handleAddCultureButton" prefHeight="25.0" prefWidth="169.0" text="Adicionar Cultura" />
+            <Button fx:id="manageCulturesButton" layoutX="37.0" layoutY="343.0" mnemonicParsing="false" onAction="#handleManageCulturesButton" prefHeight="25.0" prefWidth="169.0" text="Gerir Culturas" />
+            <Button fx:id="manageVariablesButton" layoutX="37.0" layoutY="421.0" mnemonicParsing="false" onAction="#handleManageVariablesButton" prefHeight="27.0" prefWidth="169.0" text="Gerir Variáveis" />
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="688.0" prefWidth="964.0">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="270.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:../CultureManagement/src/images/User_login_man_profile_account.png" />
+               </image>
+            </ImageView>
+            <TextField fx:id="nameUserBox" layoutX="137.0" layoutY="226.0" promptText="Name" />
+            <TextField fx:id="usernameUserBox" layoutX="136.0" layoutY="279.0" promptText="Username" />
+            <TextField fx:id="confirmPasswordUserBox" layoutX="383.0" layoutY="279.0" promptText="Confirm Password" />
+            <TextField fx:id="passwordUserBox" layoutX="384.0" layoutY="226.0" promptText="Password" />
+            <TextField fx:id="titleIdUserBox" layoutX="384.0" layoutY="333.0" promptText="Title ID" />
+            <Separator layoutX="342.0" layoutY="224.0" orientation="VERTICAL" prefHeight="133.0" prefWidth="3.0" />
+            <Button fx:id="addThisResearcherButton" layoutX="305.0" layoutY="396.0" mnemonicParsing="false" onAction="#handleAddThisResearcherButton" text="Adicionar" />
+            <TextField fx:id="emailUserBox" layoutX="138.0" layoutY="333.0" promptText="E-mail" />
+         </children></AnchorPane>
+  </items>
+</SplitPane>
