@@ -2,7 +2,7 @@ package database.mysql;
 
 public abstract class DatabaseUser {
 	
-	private String username;
+	private String username, password;
 	
 	public DatabaseUser(String username) {
 		this.username = username;
