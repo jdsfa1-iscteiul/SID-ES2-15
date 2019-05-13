@@ -31,7 +31,7 @@ public class Researcher extends DatabaseUser{
 	}
 	
 	private void initializeCultureList() throws SQLException {
-		ClientConnectionHandler.getInstance().prepareStatement("CALL show_cultures()");
+		ClientConnectionHandler.getInstance().prepareStatement("CALL get_cultures()");
 		ClientConnectionHandler.getInstance().executeStatement();
 		ResultSet results = ClientConnectionHandler.getInstance().getQueryResults();
 		while(results.next()) 
@@ -89,7 +89,7 @@ public class Researcher extends DatabaseUser{
 		return measurementsData;
 	}
 	
-	public List<Culture> getCultureList() {
+	public List<Culture> getResearcherCultureList() {
 		return cultureList;
 	}
 

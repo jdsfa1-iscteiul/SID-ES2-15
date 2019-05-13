@@ -18,18 +18,17 @@ public class Measurement {
 	//	}
 
 	public Measurement(ResultSet object) throws SQLException {
-		
-			measurementId = object.getInt("measurement_id");
-			cultureId = object.getInt("culture_id");
-			variableId = object.getInt("variable_id");
-			cultureName = object.getString("culture_name");
-			cultureDescription = object.getString("culture_description");
-			variableName = object.getString("variable_name");
-			timestamp = object.getString("timestamp");
-			variableUpperBound = object.getFloat("upper_bound");
-			variableLowerBound = object.getFloat("lower_bound");
-			valueMeasured = object.getFloat("value");
-	
+		measurementId = object.getInt("measurement_id");
+		cultureId = object.getInt("culture_id");
+		variableId = object.getInt("variable_id");
+		cultureName = object.getString("culture_name");
+		cultureDescription = object.getString("culture_description");
+		variableName = object.getString("variable_name");
+		timestamp = object.getString("timestamp");
+		variableUpperBound = object.getFloat("upper_bound");
+		variableLowerBound = object.getFloat("lower_bound");
+		valueMeasured = object.getFloat("value");
+
 
 		//	this.timestamp = timestamp;
 		//	this.valueMeasured = Float.parseFloat(valueMeasured);
