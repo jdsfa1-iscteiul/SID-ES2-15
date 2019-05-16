@@ -3,7 +3,9 @@ package utilities;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Measurement {
+import database.mysql.DatabaseObject;
+
+public class Measurement extends DatabaseObject {
 
 	private int measurementId, cultureId, variableId;
 
@@ -18,6 +20,7 @@ public class Measurement {
 	//	}
 
 	public Measurement(ResultSet object) throws SQLException {
+		super();
 		measurementId = object.getInt("measurement_id");
 		cultureId = object.getInt("culture_id");
 		variableId = object.getInt("variable_id");
@@ -28,10 +31,6 @@ public class Measurement {
 		variableUpperBound = object.getFloat("upper_bound");
 		variableLowerBound = object.getFloat("lower_bound");
 		valueMeasured = object.getFloat("value");
-
-
-		//	this.timestamp = timestamp;
-		//	this.valueMeasured = Float.parseFloat(valueMeasured);
 	}
 
 

@@ -5,7 +5,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Culture {
+import database.mysql.DatabaseObject;
+
+public class Culture extends DatabaseObject {
 
 	private int cultureId;
 
@@ -14,6 +16,7 @@ public class Culture {
 	private List<Variable> variablesList = new ArrayList<>();
 
 	public Culture(ResultSet result) {
+		super();
 		try {
 			cultureId = result.getInt("culture_id");
 			cultureName = result.getString("culture_name");

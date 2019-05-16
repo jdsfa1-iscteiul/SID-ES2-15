@@ -9,20 +9,14 @@ import database.mysql.ClientConnectionHandler;
 import database.mysql.DatabaseUser;
 
 public class Administrator extends DatabaseUser {
-	
-	List<Researcher> researcherList = new ArrayList<Researcher>();
-	
-	List<Culture> cultureList = new ArrayList<Culture>();
-	
-	List<Variable> variableList = new ArrayList<Variable>();
 
-	public Administrator(String username) {
-		super(username);
+	List<Researcher> researcherList = new ArrayList<Researcher>();
+
+
+	public Administrator(String username, String password) {
+		super(username, password);
 		try {
 			initializeResearcherList();
-			initializeCultureList();
-			initializeVariableList();
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -36,62 +30,34 @@ public class Administrator extends DatabaseUser {
 		this.researcherList = researcherList;
 	}
 
-	public List<Culture> getCultureList() {
-		return cultureList;
-	}
-
-	public void setCultureList(List<Culture> cultureList) {
-		this.cultureList = cultureList;
-	}
-
-	public List<Variable> getVariableList() {
-		return variableList;
-	}
-
-	public void setVariableList(List<Variable> variableList) {
-		this.variableList = variableList;
-	}
-
 	private void initializeResearcherList() throws SQLException {
-		ClientConnectionHandler.getInstance().prepareStatement("SELECT * FROM researcher");
-		ClientConnectionHandler.getInstance().executeStatement();
+		ClientConnectionHandler.getInstance().executeStatement("SELECT * FROM researcher join mysql.user ON mysql.user.User=researcher.username_db");
 		ResultSet results = ClientConnectionHandler.getInstance().getQueryResults();
 		while(results.next())
 			researcherList.add(new Researcher(results));
 	}
-	
-	private void initializeCultureList() throws SQLException {
-		ClientConnectionHandler.getInstance().prepareStatement("SELECT * FROM culture");
-		ClientConnectionHandler.getInstance().executeStatement();
-		ResultSet results = ClientConnectionHandler.getInstance().getQueryResults();
-		while(results.next())
-			cultureList.add(new Culture(results));
-	}
-	
-	private void initializeVariableList() throws SQLException {
-		ClientConnectionHandler.getInstance().prepareStatement("SELECT * FROM variable");
-		ClientConnectionHandler.getInstance().executeStatement();
-		ResultSet results = ClientConnectionHandler.getInstance().getQueryResults();
-		while(results.next())
-			variableList.add(new Variable(results));
-	}
-	
+
 	public void updateResearcherList() throws SQLException {
 		initializeResearcherList();
 	}
-	
-	public void updateCultureList() throws SQLException {
-		initializeCultureList();
-	}
-	
-	public void updateVariableList() throws SQLException {
-		initializeVariableList();
-	}
 
-	
 	@Override
 	public String getUserType() {
 		return "Administrator";
+	}
+
+	@Override
+	public List<Culture> getCultureList() {
+		try {
+			ClientConnectionHandler.getInstance().executeStatement("CALL show_all_cultures");
+			ResultSet results = ClientConnectionHandler.getInstance().getQueryResults();
+			while(results.next())
+				this.cultureList.add(new Culture(results));
+		} 	
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return this.cultureList;
 	}	
 
 }

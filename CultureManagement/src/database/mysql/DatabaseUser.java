@@ -8,16 +8,18 @@ import java.util.List;
 import utilities.Culture;
 import utilities.Variable;
 
-public abstract class DatabaseUser {
+public abstract class DatabaseUser extends DatabaseObject {
 	
 	private String username, password;
 	
-	List<Culture> cultureList = new ArrayList<Culture>();
+	protected List<Culture> cultureList = new ArrayList<Culture>();
 	
-	List<Variable> variableList = new ArrayList<Variable>();
+	protected List<Variable> variableList = new ArrayList<Variable>();
 	
-	public DatabaseUser(String username) {
+	public DatabaseUser(String username, String password) {
+		super();
 		this.username = username;
+		this.password = password;
 		try {
 			initializeCultureList();
 			initializeVariableList();
@@ -30,25 +32,31 @@ public abstract class DatabaseUser {
 		return username;
 	}
 	
+	public String getPassword() {
+		return password;
+	}
 	private void initializeCultureList() throws SQLException {
-		ClientConnectionHandler.getInstance().prepareStatement("CALL show_all_cultures");
-		ClientConnectionHandler.getInstance().executeStatement();
+		cultureList.clear();
+		ClientConnectionHandler.getInstance().executeStatement("CALL show_all_cultures");
 		ResultSet results = ClientConnectionHandler.getInstance().getQueryResults();
 		while(results.next()) 
 			cultureList.add(new Culture(results));
 	}
 
 	private void initializeVariableList() throws SQLException {
-		ClientConnectionHandler.getInstance().prepareStatement("CALL show_all_variables");
-		ClientConnectionHandler.getInstance().executeStatement();
+		variableList.clear();
+		ClientConnectionHandler.getInstance().executeStatement("CALL show_all_variables");
 		ResultSet results = ClientConnectionHandler.getInstance().getQueryResults();
 		while(results.next())
 			variableList.add(new Variable(results));
 	}
 	
-	public List<Culture> getCultureList() {
-		return cultureList;
+	public void updateAllLists() throws SQLException {
+		initializeVariableList();
+		initializeCultureList();
 	}
+	
+	public abstract List<Culture> getCultureList();
 
 	public void setCultureList(List<Culture> cultureList) {
 		this.cultureList = cultureList;

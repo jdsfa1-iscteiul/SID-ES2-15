@@ -3,7 +3,9 @@ package utilities;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class VariableBoundaries {
+import database.mysql.DatabaseObject;
+
+public class VariableBoundaries extends DatabaseObject{
 	
 	private Culture culture;
 	private Variable variable;
@@ -11,6 +13,7 @@ public class VariableBoundaries {
 	private float upperBound;
 	
 	public VariableBoundaries(ResultSet result) {
+		super();
 		try {
 			culture = new Culture(result);
 			variable = new Variable(result);

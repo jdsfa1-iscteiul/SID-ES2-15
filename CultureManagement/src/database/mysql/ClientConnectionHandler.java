@@ -19,14 +19,9 @@ public class ClientConnectionHandler {
 	
 	private DatabaseSystem system;
 
-	//private String username;
-
 	private PreparedStatement currentStatement;
 	
 	private Measurement selectedMeasurement;
-	private ResultSet queryResults;
-
-	//private String accountType;
 
 	public static ClientConnectionHandler getInstance() {
 		if(instance == null)
@@ -38,20 +33,16 @@ public class ClientConnectionHandler {
 		return dbConnection;
 	}
 
-//	public String getUsername() {
-//		return username;
-//	}
-
-	public void setDbConnection(Connection dbConnection, String username) {
+	public void setDbConnection(Connection dbConnection, String username, String password) {
 		this.dbConnection = dbConnection;
 		try {
-			prepareStatement("Select current_role");
-			executeStatement();
+			executeStatement("Select current_role");
+			ResultSet queryResults = currentStatement.getResultSet();
 			queryResults.next();
 			if(queryResults.getString("current_role").contains("administrator_role")) 
-				user = new Administrator(username);
+				user = new Administrator(username, password);
 			else 
-				user = new Researcher(username);
+				user = new Researcher(username, password);
 			system = new DatabaseSystem();
 		}
 		catch (SQLException exception) {
@@ -68,34 +59,17 @@ public class ClientConnectionHandler {
 		return system;
 	}
 
-//	public void setUsername(String username) {
-//		this.username = username;
-//	}
-
-//	public String getAccountType() {
-//		return accountType;
-//	}
-
 	public void resetClientConnection() {
 		instance=null;
 	}
 
-
-	public void prepareStatement(String sqlCommand) throws SQLException {
+	public void executeStatement(String sqlCommand) throws SQLException {
 		currentStatement = dbConnection.prepareStatement(sqlCommand);
-	}
-
-	public void executeStatement() throws SQLException {
 		currentStatement.execute();
-		queryResults = currentStatement.getResultSet();
 	}
 
-	public ResultSet getQueryResults() {
-		return queryResults;
-	}
-
-	public void resetQueryResults() {
-		queryResults = null;
+	public ResultSet getQueryResults() throws SQLException {
+		return currentStatement.getResultSet();
 	}
 
 	public Measurement getSelectedMeasurement() {

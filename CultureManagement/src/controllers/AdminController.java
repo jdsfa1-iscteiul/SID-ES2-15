@@ -2,7 +2,6 @@ package controllers;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -127,8 +126,7 @@ public class AdminController {
 		String title = titleIdUserBox.getText();
 		String sqlCommand = "CALL create_researcher('"+email+"','"+pass+"','"+name+"','"+username+"','"+title+"')";
 		try {
-			ClientConnectionHandler.getInstance().prepareStatement(sqlCommand);
-			ClientConnectionHandler.getInstance().executeStatement();
+			ClientConnectionHandler.getInstance().executeStatement(sqlCommand);
 			this.admin.updateResearcherList();
 			load_scene("(admin)initialMenu");
 			closeWindow(addThisResearcherButton);
@@ -156,8 +154,7 @@ public class AdminController {
 		String sqlC = "DELETE FROM researcher WHERE username_db='"; 
 		System.out.println(sqlC+researcher.getUsername());
 		try {
-			ClientConnectionHandler.getInstance().prepareStatement(sqlC+researcher.getUsername()+"'");
-			ClientConnectionHandler.getInstance().executeStatement();
+			ClientConnectionHandler.getInstance().executeStatement(sqlC+researcher.getUsername()+"'");
 			admin.getResearcherList().remove(researcher);
 			load_scene("(admin)initialMenu");
 			closeWindow(removeResearcherButton);
@@ -165,7 +162,7 @@ public class AdminController {
 		} catch (SQLException e) {
 		Alert errorAlert = new Alert(AlertType.ERROR);
 		errorAlert.setHeaderText("Impossível apagar");
-		errorAlert.setContentText("Este investigador é chave estrangeira noutra tabela.");
+		errorAlert.setContentText("Este investigador tem culturas e medições associadas.");
 		errorAlert.showAndWait();
 		}
 	}
@@ -211,9 +208,9 @@ public class AdminController {
 				String values="'"+name+"','"+desc+"','"+researcher.getUsername()+"'";
 				String d = "INSERT INTO culture(`culture_name`, `culture_description`, `researcher`) VALUES ("+values+")";
 				System.out.println(d);
-				admin.updateCultureList();
-				ClientConnectionHandler.getInstance().prepareStatement(d);
-				ClientConnectionHandler.getInstance().executeStatement();
+//				admin.updateCultureList();
+				admin.updateAllLists();
+				ClientConnectionHandler.getInstance().executeStatement(d);
 				
 			}
 	}
@@ -251,15 +248,14 @@ public class AdminController {
 			String sql = "DELETE FROM culture WHERE culture_id="+id;
 			System.out.println(sql);
 			try {
-				ClientConnectionHandler.getInstance().prepareStatement(sql);
-				ClientConnectionHandler.getInstance().executeStatement();
+				ClientConnectionHandler.getInstance().executeStatement(sql);
 				admin.getCultureList().remove(culture);
 				load_scene("(admin)initialMenu");
 				closeWindow(removeCultureButton);
 			} catch (SQLException e) {
 				Alert errorAlert = new Alert(AlertType.ERROR);
 				errorAlert.setHeaderText("Impossível apagar");
-				errorAlert.setContentText("Esta cultura é chave estrangeira noutra tabela.");
+				errorAlert.setContentText("Esta cultura tem medições associadas.");
 				errorAlert.showAndWait();
 			}
 		}
@@ -291,9 +287,9 @@ public class AdminController {
 		String name = variableNameBox.getText();
 		String d = "INSERT INTO variable(`variable_name`) VALUES ('"+name+"')";
 		System.out.println(d);
-		ClientConnectionHandler.getInstance().prepareStatement(d);
-		ClientConnectionHandler.getInstance().executeStatement();
-		admin.updateVariableList();
+		ClientConnectionHandler.getInstance().executeStatement(d);
+//		admin.updateVariableList();
+		admin.updateAllLists();
 		load_scene("(admin)initialMenu");
 		closeWindow(addConfirmVariableButton);
 	}
@@ -317,15 +313,14 @@ public class AdminController {
 			String sql = "DELETE FROM variable WHERE variable_id="+id;
 			System.out.println(sql);
 			try {
-				ClientConnectionHandler.getInstance().prepareStatement(sql);
-				ClientConnectionHandler.getInstance().executeStatement();
+				ClientConnectionHandler.getInstance().executeStatement(sql);
 				admin.getVariableList().remove(variable);
 				load_scene("(admin)initialMenu");
 				closeWindow(removeVariableButton);
 			} catch (SQLException e) {
 				Alert errorAlert = new Alert(AlertType.ERROR);
 				errorAlert.setHeaderText("Impossível apagar");
-				errorAlert.setContentText("Esta variável é chave estrangeira noutra tabela.");
+				errorAlert.setContentText("Esta variável tem medições associadas.");
 				errorAlert.showAndWait();
 			}
 		}
@@ -351,9 +346,6 @@ public class AdminController {
 	@FXML
 	private Button desassociateButton;
 	@FXML
-	private ListView culturesAssociateList;
-	@FXML
-	private ListView variablesAssociateList;
 	
 	public void handleAssociateButton() {
 

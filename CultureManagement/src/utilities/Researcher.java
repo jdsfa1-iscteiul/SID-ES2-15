@@ -22,8 +22,10 @@ public class Researcher extends DatabaseUser{
 	
 	private List<VariableBoundaries> variableBoundariesList = new ArrayList<>();
 	
-	public Researcher(String username) {
-		super(username);
+	private boolean receiveAlerts = true;
+	
+	public Researcher(String username, String password) {
+		super(username, password);
 		try {
 			initializeVariables();
 			initializeMeasurementsData();
@@ -35,8 +37,7 @@ public class Researcher extends DatabaseUser{
 	
 	private void initializeResearcherCultureList() throws SQLException {
 		researcherCultureList.clear();
-		ClientConnectionHandler.getInstance().prepareStatement("CALL get_cultures()");
-		ClientConnectionHandler.getInstance().executeStatement();
+		ClientConnectionHandler.getInstance().executeStatement("CALL get_cultures()");
 		ResultSet results = ClientConnectionHandler.getInstance().getQueryResults();
 		while(results.next()) 
 			researcherCultureList.add(new Culture(results));
@@ -44,8 +45,7 @@ public class Researcher extends DatabaseUser{
 
 	private void initializeVariableBoundariesList() throws SQLException {
 		variableBoundariesList.clear();
-		ClientConnectionHandler.getInstance().prepareStatement("CALL get_researcher_variable_boundaries()");
-		ClientConnectionHandler.getInstance().executeStatement();
+		ClientConnectionHandler.getInstance().executeStatement("CALL get_researcher_variable_boundaries()");
 		ResultSet results = ClientConnectionHandler.getInstance().getQueryResults();
 		while(results.next()) 
 			variableBoundariesList.add(new VariableBoundaries(results));
@@ -53,8 +53,7 @@ public class Researcher extends DatabaseUser{
 	
 	private void initializeMeasurementsData() throws SQLException {
 		measurementsData = new HashMap<VariableBoundaries, List<Measurement>>();
-		ClientConnectionHandler.getInstance().prepareStatement("CALL load_researcher_data()");
-		ClientConnectionHandler.getInstance().executeStatement();
+		ClientConnectionHandler.getInstance().executeStatement("CALL load_researcher_data()");
 		ResultSet results = ClientConnectionHandler.getInstance().getQueryResults();
 		while(results.next()) {
 			VariableBoundaries vb = new VariableBoundaries(results);
@@ -77,8 +76,7 @@ public class Researcher extends DatabaseUser{
 	}
 	
 	private void initializeVariables() throws SQLException {
-		ClientConnectionHandler.getInstance().prepareStatement("CALL get_researcher_bio()");
-		ClientConnectionHandler.getInstance().executeStatement();
+		ClientConnectionHandler.getInstance().executeStatement("CALL get_researcher_bio()");
 		ResultSet results = ClientConnectionHandler.getInstance().getQueryResults();
 		results.next();
 		employeeId = results.getInt("employee_id");
@@ -88,8 +86,8 @@ public class Researcher extends DatabaseUser{
 	}
 
 
-	public Researcher(int employeeId, String name, String email, String username, String title) {
-		super(username);
+	public Researcher(int employeeId, String name, String email, String username, String password, String title) {
+		super(username, password);
 		this.employeeId = employeeId;
 		this.name = name;
 		this.email = email;
@@ -97,7 +95,7 @@ public class Researcher extends DatabaseUser{
 	}
 	
 	public Researcher(ResultSet object) throws SQLException {
-		super(object.getString("username_db"));
+		super(object.getString("username_db"), object.getString("password"));
 		employeeId = object.getInt("employee_id");
 		name = object.getString("name");
 		email = object.getString("email");
@@ -152,5 +150,30 @@ public class Researcher extends DatabaseUser{
 	@Override
 	public String getUserType() {
 		return "Researcher";
+	}
+	
+	@Override
+	public String toString() {
+		return this.getUsername();
+	}
+	
+	public List<Measurement> getAllMeasurements() {
+		List<Measurement> measurements = new ArrayList<>();
+		for(List<Measurement> measurementList: measurementsData.values()) 
+			measurements.addAll(measurementList);
+		return measurements;
+	}
+
+	@Override
+	public List<Culture> getCultureList() {
+		return null;
+	}
+	
+	public boolean getReceiveAlerts() {
+		return receiveAlerts;
+	}
+	
+	public void setReceiveAlerts(boolean value) {
+		this.receiveAlerts = value;
 	}
 }

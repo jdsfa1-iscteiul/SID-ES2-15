@@ -40,10 +40,10 @@ public class LoginController {
 			String password = passwordBox.getText();
 			Connection connection = DriverManager.getConnection("jdbc:mariadb://"+host+dbName+"?user="
 																			+username+"&password="+password);
-			ClientConnectionHandler.getInstance().setDbConnection(connection, username);
+			ClientConnectionHandler.getInstance().setDbConnection(connection, username, password);
 			
 			if(ClientConnectionHandler.getInstance().getUser() instanceof Researcher) 
-				load_scene("(researcher)initialMenu");
+				load_scene("(researcher)initialMenuTest");
 			else
 				load_scene("(admin)initialMenu");
 			
@@ -67,6 +67,7 @@ public class LoginController {
 		Parent p = Loader.getRoot();
 		Stage stage = new Stage();
 		stage.setScene(new Scene(p));
+		stage.setTitle("Main Menu");
 		stage.show();
 	}
 	

@@ -15,13 +15,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import utilities.Culture;
-import utilities.Measurement;
 import utilities.Researcher;
+import utilities.UtilityFunctions;
 import utilities.Variable;
 import utilities.VariableBoundaries;
 
@@ -31,6 +33,21 @@ public class ResearcherActionController {
 	//Menu de ver ou editar medição
 
 	private Researcher researcher;
+
+
+	@FXML
+	private TextField manageAccountNameField, manageAccountEmailField;
+	@FXML
+	private TextField manageAccountCurrentPasswordField, manageAccountNewPasswordField, manageAccountConfirmPasswordField;
+	@FXML
+	private Label manageAccountUsernameLabel, manageAccountResearcherIdLabel, manageAccountResearcherTitleLabel;
+	@FXML
+	private CheckBox manageAccountAlertsCheckBox;
+	@FXML
+	private Button manageAccountEditButton, manageAccountSaveButton, manageAccountCancelButton;
+
+
+
 
 	@FXML
 	private TextField actionCultureBox;
@@ -44,7 +61,7 @@ public class ResearcherActionController {
 	private Button saveButton;
 	@FXML
 	private Button exitButton;
-	
+
 	@FXML
 	private ListView<Culture> culturesListSeeEdit;
 	@FXML
@@ -62,26 +79,80 @@ public class ResearcherActionController {
 		variablesListSeeEdit.setItems(variablesListAddAux);
 	}
 
+	public void handleManageAccountEditButton() {
+		manageAccountAlertsCheckBox.setDisable(false);
+		manageAccountNameField.setDisable(false);
+		manageAccountEmailField.setDisable(false);
+		manageAccountCurrentPasswordField.setDisable(false);
+		manageAccountNewPasswordField.setDisable(false);
+		manageAccountConfirmPasswordField.setDisable(false);
+	}
+
+	public void handleManageAccountSaveButton() {
+		if(validateManageAccountData()) {
+			String sqlSttm = "CALL update_researcher('"+manageAccountNameField.getText()+"','"+manageAccountEmailField.getText()+"','"+
+						manageAccountNewPasswordField.getText()+"')";
+			String sqlSttm2 = "Set PASSWORD for '" + researcher.getUsername() + "'@'localhost' = Password('"+manageAccountNewPasswordField.getText()+"')";
+			try {
+				ClientConnectionHandler.getInstance().executeStatement(sqlSttm);
+				ClientConnectionHandler.getInstance().executeStatement(sqlSttm2);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			ClientConnectionHandler.getInstance().setSelectedMeasurement(null);
+			closeWindow(manageAccountSaveButton);
+		}
+	}
+
+	private boolean validateManageAccountData() {
+
+		if(!manageAccountCurrentPasswordField.getText().equals(researcher.getPassword())) {
+			UtilityFunctions.generateAlertError("Password incorreta", "A palavra-passe que introduziu está incorreta!");
+			return false;
+		}
+		else if (!UtilityFunctions.isEmail(manageAccountEmailField.getText())) {
+			UtilityFunctions.generateAlertError("Email inválido", "O e-mail que introduziu não é válido");
+			return false;
+		}else if (manageAccountConfirmPasswordField.getLength() > 0 && 
+				!manageAccountConfirmPasswordField.getText().equals(manageAccountNewPasswordField.getText())) {
+			UtilityFunctions.generateAlertError("Erro a criar nova password", "As password não coincidem");
+			return false;}
+		else 
+			return true;
+	}
+
+	public void handleManageAccountCancelButton() {
+		ClientConnectionHandler.getInstance().setSelectedMeasurement(null);
+		closeWindow(manageAccountCancelButton);	
+	}
+
+	private void initializeManageAccountFields() {
+		manageAccountResearcherIdLabel.setText(String.valueOf(researcher.getEmployeeId()));
+		manageAccountResearcherTitleLabel.setText(researcher.getTitle());
+		manageAccountNameField.setText(researcher.getName());
+		manageAccountUsernameLabel.setText(researcher.getUsername());
+		manageAccountEmailField.setText(researcher.getEmail());
+		manageAccountCurrentPasswordField.setText("tt");
+	}
 	public void handleSaveButton() {
-		
+
 		actionValueBox.getText();
-		
+
 		if(variablesListSeeEdit.getSelectionModel().getSelectedItem() != null) {
-			Culture culture = culturesListSeeEdit.getSelectionModel().getSelectedItem();
-			Variable variable = variablesListSeeEdit.getSelectionModel().getSelectedItem();
+//			Culture culture = culturesListSeeEdit.getSelectionModel().getSelectedItem();
+//			Variable variable = variablesListSeeEdit.getSelectionModel().getSelectedItem();
 
 			try {
 				String sqlCommand = "Update measurements Set "; 
 				sqlCommand += "timestamp = '"+actionDateBox.getText()+"', value = "+actionValueBox.getText()+" where timestamp = '" + ClientConnectionHandler.getInstance().getSelectedMeasurement().getTimestamp() +"'";
 				System.out.println(sqlCommand);
-				ClientConnectionHandler.getInstance().prepareStatement(sqlCommand);
-				ClientConnectionHandler.getInstance().executeStatement();
+				ClientConnectionHandler.getInstance().executeStatement(sqlCommand);
 				researcher.updateResearcherLists();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}	
 		}
-		
+
 		ClientConnectionHandler.getInstance().setSelectedMeasurement(null);
 		closeWindow(exitButton);
 	}
@@ -93,7 +164,7 @@ public class ResearcherActionController {
 
 	public void initialize() {
 		researcher = (Researcher)ClientConnectionHandler.getInstance().getUser();
-		for(Culture culture: researcher.getCultureList()) {
+		for(Culture culture: researcher.getResearcherCultureList()) {
 			if (culture.getResearcher().equals(researcher.getUsername()))
 				cultureAssociateAuxList.add(culture);
 		}
@@ -103,6 +174,8 @@ public class ResearcherActionController {
 			culturesListAddMeasurement.setItems(cultureAssociateAuxList);
 		if(culturesListSeeEdit!=null)
 			culturesListSeeEdit.setItems(cultureAssociateAuxList);
+		if(manageAccountSaveButton!= null)
+			initializeManageAccountFields();
 	}
 
 
@@ -130,8 +203,7 @@ public class ResearcherActionController {
 				String sqlCommand = "INSERT INTO measurements (culture_id, variable_id,timestamp, value) "; 
 				sqlCommand += "VALUES ("+culture.getCultureId()+","+variable.getVariableId()+",'"+time+"',"+valueBox.getText()+")";
 				System.out.println(sqlCommand);
-				ClientConnectionHandler.getInstance().prepareStatement(sqlCommand);
-				ClientConnectionHandler.getInstance().executeStatement();
+				ClientConnectionHandler.getInstance().executeStatement(sqlCommand);
 				checkForAlerts(culture, variable, Float.parseFloat(valueBox.getText()));
 				researcher.updateResearcherLists();
 			} catch (SQLException e) {
@@ -140,7 +212,7 @@ public class ResearcherActionController {
 		}
 		closeWindow(addMeasurementButton);
 	}
-	
+
 	private void checkForAlerts(Culture culture, Variable variable, Float value) {
 		for(VariableBoundaries vb: researcher.getVariableBoundariesList())
 			if(vb.getCulture().equals(culture) && vb.getVariable().equals(variable))
@@ -148,10 +220,10 @@ public class ResearcherActionController {
 					GmailAccount acc = new GmailAccount("investigadorSIDES@gmail.com", "123grupo15");
 					BDAGmailClient client = new BDAGmailClient(acc);
 					client.reply("investigadorSIDES@gmail.com", "alert", "mediçao fora dos limites: " + value, "cumprimentos", researcher.getName());
-					
+
 				}
 	}
-	
+
 	@FXML
 	private void displayVariablesForAddMeasurement() {
 		variablesListAddAux.clear();
@@ -217,8 +289,7 @@ public class ResearcherActionController {
 			try {
 				String sqlCommand = "INSERT INTO variable_boundaries(culture_id, variable_id, lower_bound, upper_bound) "; 
 				sqlCommand += "VALUES ("+culture.getCultureId()+","+variable.getVariableId()+","+lowerBound+","+upperBound+")";
-				ClientConnectionHandler.getInstance().prepareStatement(sqlCommand);
-				ClientConnectionHandler.getInstance().executeStatement();
+				ClientConnectionHandler.getInstance().executeStatement(sqlCommand);
 				researcher.getVariableBoundariesList().add(newVb);
 
 			} catch (SQLException e) {
@@ -238,8 +309,7 @@ public class ResearcherActionController {
 			try {
 				String sqlCommand = "DELETE FROM variable_boundaries ";
 				sqlCommand+="WHERE culture_id = " + culture.getCultureId() + " AND " + "variable_id = " + variable.getVariableId();
-				ClientConnectionHandler.getInstance().prepareStatement(sqlCommand);
-				ClientConnectionHandler.getInstance().executeStatement();
+				ClientConnectionHandler.getInstance().executeStatement(sqlCommand);
 				researcher.getVariableBoundariesList().remove(oldVb);
 
 			} catch (SQLException e) {
@@ -253,8 +323,8 @@ public class ResearcherActionController {
 	public void handleCancelButton() {
 		closeWindow(cancelButton);
 	}
-	
-	
+
+
 
 
 	public void load_scene(String scene) {

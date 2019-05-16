@@ -28,8 +28,7 @@ public class DatabaseSystem {
 	}
 
 	private void initializeLists() throws SQLException {
-		ClientConnectionHandler.getInstance().prepareStatement("SELECT * FROM light_measurements");
-		ClientConnectionHandler.getInstance().executeStatement();
+		ClientConnectionHandler.getInstance().executeStatement("SELECT * FROM light_measurements");
 		ResultSet results = ClientConnectionHandler.getInstance().getQueryResults();
 		
 		while(results.next()) {
@@ -37,8 +36,7 @@ public class DatabaseSystem {
 					new LightMeasurement(results.getInt("measurement_id"), results.getFloat("value"), results.getString("timestamp"));
 			lightMeasurements.add(lightMeasurement);
 		}
-		ClientConnectionHandler.getInstance().prepareStatement("SELECT * FROM temperature_measurements");
-		ClientConnectionHandler.getInstance().executeStatement();
+		ClientConnectionHandler.getInstance().executeStatement("SELECT * FROM temperature_measurements");
 		results = ClientConnectionHandler.getInstance().getQueryResults();
 		while(results.next()) {
 			TemperatureMeasurement temperatureMeasurement = 
@@ -49,8 +47,7 @@ public class DatabaseSystem {
 	}
 
 	private void initializeVariables() throws SQLException {
-		ClientConnectionHandler.getInstance().prepareStatement("SELECT * FROM system");
-		ClientConnectionHandler.getInstance().executeStatement();
+		ClientConnectionHandler.getInstance().executeStatement("SELECT * FROM system");
 		ResultSet results = ClientConnectionHandler.getInstance().getQueryResults();
 		results.next();
 		lightLowerBound = results.getFloat("light_lower_bound");

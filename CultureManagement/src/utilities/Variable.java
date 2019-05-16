@@ -2,18 +2,19 @@ package utilities;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
-public class Variable {
+import database.mysql.DatabaseObject;
+
+public class Variable extends DatabaseObject {
 	
-	private static List<Variable> variables = new ArrayList<>();
+	//private static List<Variable> variables = new ArrayList<>();
 	
 	private int variableId;
 
 	private String variableName;
 	
 	public Variable(ResultSet result) {
+		super();
 		try {
 			variableId = result.getInt("variable_id");
 			variableName = result.getString("variable_name");

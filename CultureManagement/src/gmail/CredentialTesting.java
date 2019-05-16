@@ -10,7 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
+//import java.util.concurrent.TimeUnit;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -164,14 +164,14 @@ public class CredentialTesting {
     /**
      * Lets latch to wait for data
      */
-    private void waitForData() {
-        try {
-            log.info("Waiting for username/password");
-            latch.await(30, TimeUnit.SECONDS);
-        } catch (final InterruptedException e1) {
-            log.warn("Interrupted", e1);
-        }
-    }
+//    private void waitForData() {
+//        try {
+//            log.info("Waiting for username/password");
+//            latch.await(30, TimeUnit.SECONDS);
+//        } catch (final InterruptedException e1) {
+//            log.warn("Interrupted", e1);
+//        }
+//    }
 
     /**
      * Creates the dialog

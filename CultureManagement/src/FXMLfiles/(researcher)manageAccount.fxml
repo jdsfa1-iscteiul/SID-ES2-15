@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<TitledPane animated="false" collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="329.0" prefWidth="602.0" text="Gerir Conta" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ResearcherActionController">
+  <content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="310.0" prefWidth="598.0">
+         <children>
+            <Label layoutX="41.0" layoutY="14.0" prefHeight="24.0" prefWidth="93.0" text="Dados Pessoais">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Separator layoutX="14.0" layoutY="48.0" prefHeight="0.0" prefWidth="570.0" />
+            <Label layoutX="18.0" layoutY="71.0" prefHeight="17.0" prefWidth="59.0" text="username:" />
+            <Label layoutX="42.0" layoutY="182.0" prefHeight="17.0" prefWidth="44.0" text="email:" />
+            <Label layoutX="43.0" layoutY="127.0" text="nome:" />
+            <Label layoutX="414.0" layoutY="18.0" text="Título: " />
+            <Label layoutX="228.0" layoutY="18.0" prefHeight="17.0" prefWidth="151.0" text="Investigador n.º" />
+            <Label fx:id="manageAccountResearcherIdLabel" layoutX="319.0" layoutY="18.0" prefHeight="17.0" prefWidth="60.0" />
+            <TextField fx:id="manageAccountEmailField" disable="true" layoutX="88.0" layoutY="178.0" prefHeight="25.0" prefWidth="260.0" />
+            <TextField fx:id="manageAccountNameField" disable="true" layoutX="90.0" layoutY="123.0" prefHeight="25.0" prefWidth="256.0" />
+            <Label layoutX="440.0" layoutY="51.0" text="password atual" />
+            <PasswordField fx:id="manageAccountCurrentPasswordField" disable="true" layoutX="414.0" layoutY="68.0" />
+            <Label layoutX="439.0" layoutY="106.0" prefHeight="17.0" prefWidth="100.0" text="nova password" />
+            <Label layoutX="427.0" layoutY="161.0" prefHeight="17.0" prefWidth="135.0" text="repetir nova password" />
+            <PasswordField fx:id="manageAccountNewPasswordField" disable="true" layoutX="414.0" layoutY="123.0" />
+            <PasswordField fx:id="manageAccountConfirmPasswordField" disable="true" layoutX="414.0" layoutY="178.0" />
+            <CheckBox fx:id="manageAccountAlertsCheckBox" disable="true" layoutX="235.0" layoutY="72.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="108.0" selected="true" text="receber alertas">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </CheckBox>
+            <Button fx:id="manageAccountEditButton" layoutX="86.0" layoutY="243.0" mnemonicParsing="false" onAction="#handleManageAccountEditButton" text="Editar Dados" />
+            <Button fx:id="manageAccountSaveButton" layoutX="228.0" layoutY="243.0" mnemonicParsing="false" onAction="#handleManageAccountSaveButton" prefHeight="25.0" prefWidth="121.0" text="Gravar Alterações" />
+            <Button fx:id="manageAccountCancelButton" layoutX="419.0" layoutY="243.0" mnemonicParsing="false" onAction="#handleManageAccountCancelButton" prefHeight="25.0" prefWidth="79.0" text="Cancelar" />
+            <Label fx:id="manageAccountResearcherTitleLabel" layoutX="452.0" layoutY="18.0" prefHeight="17.0" prefWidth="86.0" />
+            <Label fx:id="manageAccountUsernameLabel" layoutX="88.0" layoutY="72.0" prefHeight="17.0" prefWidth="116.0" />
+         </children></AnchorPane>
+  </content>
+</TitledPane>

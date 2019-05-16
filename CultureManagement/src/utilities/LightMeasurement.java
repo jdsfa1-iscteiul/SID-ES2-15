@@ -8,7 +8,6 @@ public class LightMeasurement {
 	private String timestamp;
 
 	public LightMeasurement(int measurementId, float value, String timestamp) {
-		super();
 		this.measurementId = measurementId;
 		this.value = value;
 		this.timestamp = timestamp;
